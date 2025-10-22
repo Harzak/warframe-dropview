@@ -1,11 +1,11 @@
-﻿using warframe_dropview.Backend.API.Models;
+﻿namespace warframe_dropview.Backend.Plugin.MongoDB.Registrations;
 
-namespace warframe_dropview.Backend.API.Services;
-
-internal static class DatabaseInitializer
+public static class DatabaseInitializer
 {
     public static async Task InitializeAsync(IMongoDatabase database)
     {
+        ArgumentNullException.ThrowIfNull(database, nameof(database));  
+
         List<string> collectionNames = (await database.ListCollectionNamesAsync().ConfigureAwait(false)).ToList();
 
         if (!collectionNames.Contains("mission_drops"))
