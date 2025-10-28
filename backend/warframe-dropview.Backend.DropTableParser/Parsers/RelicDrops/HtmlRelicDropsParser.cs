@@ -11,7 +11,7 @@ internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDro
     private string _code;
     private string _refinement;
 
-    public HtmlRelicDropsParser(List<HtmlNode> drops) : base(drops)
+    public HtmlRelicDropsParser(List<HtmlNode> drops, ILogger<HtmlRelicDropsParser> logger) : base(drops, logger)
     {
         _tier = string.Empty;
         _code = string.Empty;
@@ -24,11 +24,11 @@ internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDro
 
         if (_tier.Equals("requiem", StringComparison.OrdinalIgnoreCase))
         {
-            Console.WriteLine("Skipping invalid relic drops: {0}", base.Drops[0].InnerText);
+            Logger.LogSkippingInvalidRelicDrops(base.Drops[0].InnerText);
             return allRelicDrops;
         }
 
-        Console.WriteLine("Parsing relic drops for: {0} {1} ({2})", _tier, _code, _refinement);
+        base.Logger.LogParsingRelicDrops(_tier, _code, _refinement);
 
         for (int i = 0; i<base.Drops.Count; i++)
         {
@@ -71,7 +71,7 @@ internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDro
                     Tier = _tier
                 }
             });
-            Console.WriteLine("Parsed relic drop: {0} ({1} {2}) - {3} ({4}%)", itemParser.Name, itemParser.Type, itemParser.SubType, rarity, percentage);
+            base.Logger.LogParsedRelicDrop(itemParser.Name, itemParser.Type.ToString(), itemParser.SubType, rarity, percentage);
         }
         return allRelicDrops;
     }

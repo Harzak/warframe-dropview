@@ -10,7 +10,7 @@ internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDro
     private string _name;
     private decimal _modDropChance;
 
-    public HtmlEnemyDropsParser(List<HtmlNode> drops) : base(drops)
+    public HtmlEnemyDropsParser(List<HtmlNode> drops, ILogger<HtmlEnemyDropsParser> logger) : base(drops, logger)
     {
         _name = string.Empty;
     }
@@ -18,9 +18,9 @@ internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDro
     protected override List<EnemyDrop> ParseInternal()
     {
         List<EnemyDrop> allEnemiesDrops = [];
-        Console.WriteLine("Parsing enemy drops for: {0}", _name);
+        base.Logger.LogParsingEnemyDrops(_name);
 
-        for (int i = 0; i<base.Drops.Count; i++)
+        for (int i = 0; i< base.Drops.Count; i++)
         {
             if (i == 0)
             {
@@ -59,7 +59,7 @@ internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDro
                     ModDropRate = _modDropChance.ToString(CultureInfo.InvariantCulture)
                 }
             });
-            Console.WriteLine("Parsed enemy drop: {0} ({1} {2}) - {3} ({4}%)", itemParser.Name, itemParser.Type, itemParser.SubType, rarity, percentage);
+            base.Logger.LogParsedEnemyDrop(itemParser.Name, itemParser.Type.ToString(), itemParser.SubType, rarity, percentage);
         }
         return allEnemiesDrops;
     }

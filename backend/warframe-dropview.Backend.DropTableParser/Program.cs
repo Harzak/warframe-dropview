@@ -10,6 +10,16 @@ internal sealed class Program
 
         builder.Configuration.AddJsonFile("appsettings.json", optional: true);
 
+        // Configure logging for better performance
+        builder.Logging.ClearProviders();
+        builder.Logging.SetMinimumLevel(LogLevel.Information);
+        builder.Logging.AddSimpleConsole(options =>
+        {
+            options.SingleLine = true;
+            options.TimestampFormat = null;
+            options.IncludeScopes = false;
+        });
+
         builder.Services.RegisterMongoDBPlugin(builder.Configuration)
                         .RegisterDropTableParser()
                         .AddSingleton<App>();

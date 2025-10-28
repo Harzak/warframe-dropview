@@ -12,7 +12,7 @@ internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<Missio
     private string _type;
     private string _currentRotation;
 
-    public HtmlMissionDropsParser(List<HtmlNode> drops) : base(drops)
+    public HtmlMissionDropsParser(List<HtmlNode> drops, ILogger<HtmlMissionDropsParser> logger) : base(drops, logger)
     {
         _planet = string.Empty;
         _mission = string.Empty;
@@ -23,7 +23,7 @@ internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<Missio
     protected override List<MissionDrop> ParseInternal()
     {
         List<MissionDrop> allMissionDrops = [];
-        Console.WriteLine("Parsing mission drops for: {0}/{1} ({2})", _planet, _mission, _type);
+        base.Logger.LogParsingMissionDrops(_planet, _mission, _type);
 
         for (int i = 0; i<base.Drops.Count; i++)
         {
@@ -72,7 +72,7 @@ internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<Missio
                     Rotation = _currentRotation
                 }
             });
-            Console.WriteLine("Parsed mission drop: {0} ({1} {2}) - {3} ({4}%)", itemParser.Name, itemParser.Type, itemParser.SubType,  rarity, percentage);
+            base.Logger.LogParsedMissionDrop(itemParser.Name, itemParser.Type.ToString(), itemParser.SubType, rarity, percentage);
         }
         return allMissionDrops;
     }

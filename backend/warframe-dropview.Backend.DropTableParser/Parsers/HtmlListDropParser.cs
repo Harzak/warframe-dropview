@@ -1,12 +1,21 @@
 ﻿namespace warframe_dropview.Backend.DropTableParser.Parsers;
 
-internal sealed class HtmlListDropParser : IDropParser
+internal sealed partial class HtmlListDropParser : IDropParser
 {
     private const string DELIMITER_CLASS = "blank-row";
+
+    private readonly ILogger<HtmlListDropParser> _logger;
+    private readonly ILoggerFactory _loggerFactory;
 
     public ReadOnlyCollection<MissionDrop>? MissionDrops { get; private set; }
     public ReadOnlyCollection<RelicDrop>? RelicDrops { get; private set; }
     public ReadOnlyCollection<EnemyDrop>? EnemyDrops { get; private set; }
+
+    public HtmlListDropParser(ILogger<HtmlListDropParser> logger, ILoggerFactory loggerFactory)
+    {
+        _logger = logger;
+        _loggerFactory = loggerFactory;
+    }
 
     public async Task ParseAsync()
     {
@@ -24,11 +33,14 @@ internal sealed class HtmlListDropParser : IDropParser
         this.EnemyDrops = await enemyTask.ConfigureAwait(false);
     }
 
-    private List<MissionDrop> ParseMissions(HtmlNode table) => ParseDrops(table, nodes => new HtmlMissionDropsParser(nodes));
+    private List<MissionDrop> ParseMissions(HtmlNode table) 
+        => ParseDrops(table, nodes => new HtmlMissionDropsParser(nodes, _loggerFactory.CreateLogger<HtmlMissionDropsParser>()));
 
-    private List<RelicDrop> ParseRelics(HtmlNode table) => ParseDrops(table, nodes => new HtmlRelicDropsParser(nodes));
+    private List<RelicDrop> ParseRelics(HtmlNode table) 
+        => ParseDrops(table, nodes => new HtmlRelicDropsParser(nodes, _loggerFactory.CreateLogger<HtmlRelicDropsParser>()));
 
-    private List<EnemyDrop> ParseEnemies(HtmlNode table) => ParseDrops(table, nodes => new HtmlEnemyDropsParser(nodes));
+    private List<EnemyDrop> ParseEnemies(HtmlNode table) 
+        => ParseDrops(table, nodes => new HtmlEnemyDropsParser(nodes, _loggerFactory.CreateLogger<HtmlEnemyDropsParser>()));
 
     private List<T> ParseDrops<T>(HtmlNode doc, Func<List<HtmlNode>, IDropTableParser<T>> parserFactory) where T : class
     {
@@ -49,7 +61,7 @@ internal sealed class HtmlListDropParser : IDropParser
 
     private List<List<HtmlNode>> SplitRowsIntoChunks(HtmlNodeCollection allEnemiesRows)
     {
-        Console.WriteLine("Splitting {0} rows into enemies", allEnemiesRows.Count);
+        _logger.LogSplittingRows(allEnemiesRows.Count);
 
         List<List<HtmlNode>> enemyRowsChunks = [];
         List<HtmlNode> currentChunk = [];
@@ -65,7 +77,7 @@ internal sealed class HtmlListDropParser : IDropParser
             currentChunk.Add(row);
         }
 
-        Console.WriteLine("Split {0} rows into {1} enemies", allEnemiesRows.Count, enemyRowsChunks.Count);
+        _logger.LogSplitComplete(allEnemiesRows.Count, enemyRowsChunks.Count);
         return enemyRowsChunks;
     }
 }

@@ -7,14 +7,15 @@ internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> wher
     [GeneratedRegex(@"^(.+?)\s*\(([\d.]+)%\)$")]
     protected static partial Regex DropInfoFormat();
 
+    protected readonly ILogger Logger;
     protected readonly List<HtmlNode> Drops;
-    private bool disposedValue;
 
     public bool IsValid { get; protected set; }
 
-    protected BaseHtmlDropParser(List<HtmlNode> drops)
+    protected BaseHtmlDropParser(List<HtmlNode> drops, ILogger logger)
     {
         this.Drops = drops;
+        this.Logger = logger;
         this.IsValid = this.ParseHeader(this.Drops[0]);
     }
 
@@ -23,7 +24,7 @@ internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> wher
         this.IsValid = this.ParseHeader(this.Drops[0]);
         if (!IsValid)
         {
-            Console.WriteLine("Skipping invalid relic drops: {0}", this.Drops[0].InnerText);
+            this.Logger.LogSkippingInvalidDrops(this.Drops[0].InnerText);
             return default;
         }
         return ParseInternal().AsReadOnly();
@@ -33,15 +34,16 @@ internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> wher
 
     protected abstract bool ParseHeader(HtmlNode node);
 
+
+    private bool _disposed;
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposedValue)
+        if (!_disposed)
         {
             this.Drops.Clear();
-            disposedValue=true;
+            _disposed=true;
         }
     }
-
     public void Dispose()
     {
         Dispose(disposing: true);

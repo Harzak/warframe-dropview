@@ -1,7 +1,8 @@
-﻿
-//.Net
+﻿//.Net
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Logging.Console;
 global using System.Globalization;
 global using System.Collections.ObjectModel;
 
@@ -11,6 +12,7 @@ global using warframe_dropview.Backend.Models.Enums;
 global using warframe_dropview.Backend.Plugin.MongoDB.Registrations;
 global using warframe_dropview.Backend.DropTableParser.Interfaces;
 global using warframe_dropview.Backend.DropTableParser.Extensions;
+global using warframe_dropview.Backend.DropTableParser.Logging;
 global using warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 global using warframe_dropview.Backend.DropTableParser.Parsers.RelicDrops;
 global using warframe_dropview.Backend.DropTableParser.Parsers.EnemyDrops;
