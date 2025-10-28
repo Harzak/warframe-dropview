@@ -1,4 +1,7 @@
-﻿using MongoDB.Driver;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using warframe_dropview.Backend.DropTableParser.HtmlParsers.MissionDrops;
+using warframe_dropview.Backend.Models;
 
 namespace warframe_dropview.Backend.DropTableParser;
 
@@ -12,9 +15,17 @@ internal sealed class App
     }
 
 
-    public async Task RunAsync()
+    public Task RunAsync()
     {
-        await DatabaseInitializer.InitializeAsync(_mongoDatabase).ConfigureAwait(false);
+        var doc = new HtmlDocument();
+        doc.Load(@"C:\Users\Aurelien\Desktop\Warframe PC Drops.html");
+
+        HtmlNode missionTable = doc.DocumentNode.SelectSingleNode("//table[1]");
+
+        List<MissionDrop> allMissionDrops = HtmlMissionsListDropsParser.Parse(missionTable);
+
+        Console.ReadKey();
+        return Task.CompletedTask;
     }
 }
 
