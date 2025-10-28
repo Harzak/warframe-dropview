@@ -1,50 +1,33 @@
-﻿using System.Numerics;
-using System.Text.RegularExpressions;
-using warframe_dropview.Backend.DropTableParser.Parsers.EnemyDrops;
-using warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
-using warframe_dropview.Backend.Models;
+﻿using System.Text.RegularExpressions;
 
-namespace warframe_dropview.Backend.DropTableParser.Parsers.ModBySourceDrops;
+namespace warframe_dropview.Backend.DropTableParser.Parsers.EnemyDrops;
 
-internal sealed partial class HtmlEnemyDropsParser
+internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDrop>
 {
     [GeneratedRegex(@"Mod Drop Chance:\s*([\d.]+)%")]
     private static partial Regex HeaderFormat();
 
-    [GeneratedRegex(@"^(.+?)\s*\(([\d.]+)%\)$")]
-    private static partial Regex DropInfoFormat();
-
-    private readonly List<HtmlNode> _drops;
     private string _name;
     private decimal _modDropChance;
 
-    public bool IsValid { get; private set; }
-
-    public HtmlEnemyDropsParser(List<HtmlNode> drops)
+    public HtmlEnemyDropsParser(List<HtmlNode> drops) : base(drops)
     {
-        _drops = drops;
         _name = string.Empty;
-        this.IsValid = ParseHeader(drops[0]);
     }
 
-    public List<EnemyDrop> Parse()
+    protected override List<EnemyDrop> ParseInternal()
     {
         List<EnemyDrop> allEnemiesDrops = [];
-        if (!IsValid)
-        {
-            Console.WriteLine("Skipping invalid enemy drops: {0}", _drops[0].InnerText);
-            return allEnemiesDrops;
-        }
         Console.WriteLine("Parsing enemy drops for: {0}", _name);
 
-        for (int i = 0; i<_drops.Count; i++)
+        for (int i = 0; i<base.Drops.Count; i++)
         {
             if (i == 0)
             {
                 continue;
             }
 
-            HtmlNode drop = _drops[i];
+            HtmlNode drop = base.Drops[i];
             List<HtmlNode> cells = drop.ChildNodes.ToList();
 
             string itemName = cells[1].InnerText.Trim();
@@ -81,7 +64,7 @@ internal sealed partial class HtmlEnemyDropsParser
         return allEnemiesDrops;
     }
 
-    private bool ParseHeader(HtmlNode node)
+    protected override bool ParseHeader(HtmlNode node)
     {
         if (node.ChildNodes.Count == 0 || string.IsNullOrWhiteSpace(node.ChildNodes[0].InnerText))
         {

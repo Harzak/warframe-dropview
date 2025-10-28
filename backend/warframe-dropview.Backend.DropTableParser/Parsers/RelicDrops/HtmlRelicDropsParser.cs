@@ -1,53 +1,43 @@
-﻿using System.Numerics;
-using System.Text.RegularExpressions;
-using warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
-using warframe_dropview.Backend.Models;
+﻿using System.Text.RegularExpressions;
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers.RelicDrops;
 
-internal sealed partial class HtmlRelicDropsParser
+internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDrop>
 {
     [GeneratedRegex(@"^(\w+)\s+(\w+)\s+Relic\s*\((.+?)\)")]
     private static partial Regex HeaderFormat();
 
-
-    [GeneratedRegex(@"^(.+?)\s*\(([\d.]+)%\)$")]
-    private static partial Regex DropInfoFormat();
-
-    private readonly List<HtmlNode> _drops;
     private string _tier;
     private string _code;
     private string _refinement;
 
-    public bool IsValid { get; private set; }
-
-    public HtmlRelicDropsParser(List<HtmlNode> drops)
+    public HtmlRelicDropsParser(List<HtmlNode> drops) : base(drops)
     {
-        _drops = drops;
         _tier = string.Empty;
         _code = string.Empty;
         _refinement = string.Empty;
-        this.IsValid = ParseHeader(drops[0].InnerText);
     }
 
-    public List<RelicDrop> Parse()
+    protected override List<RelicDrop> ParseInternal()
     {
         List<RelicDrop> allRelicDrops = [];
-        if (!IsValid || _tier.Equals("requiem", StringComparison.OrdinalIgnoreCase))
+
+        if (_tier.Equals("requiem", StringComparison.OrdinalIgnoreCase))
         {
-            Console.WriteLine("Skipping invalid relic drops: {0}", _drops[0].InnerText);
+            Console.WriteLine("Skipping invalid relic drops: {0}", base.Drops[0].InnerText);
             return allRelicDrops;
         }
+
         Console.WriteLine("Parsing relic drops for: {0} {1} ({2})", _tier, _code, _refinement);
 
-        for (int i = 0; i<_drops.Count; i++)
+        for (int i = 0; i<base.Drops.Count; i++)
         {
             if (i == 0)
             {
                 continue;
             }
 
-            HtmlNode drop = _drops[i];
+            HtmlNode drop = base.Drops[i];
             List<HtmlNode> cells = drop.ChildNodes.ToList();
 
             string itemName = cells[0].InnerText.Trim();
@@ -86,9 +76,9 @@ internal sealed partial class HtmlRelicDropsParser
         return allRelicDrops;
     }
 
-    private bool ParseHeader(string innerText)
+    protected override bool ParseHeader(HtmlNode node)
     {
-        Match match = HeaderFormat().Match(innerText);
+        Match match = HeaderFormat().Match(node.InnerText);
 
         if (match.Success)
         {
@@ -98,6 +88,4 @@ internal sealed partial class HtmlRelicDropsParser
         }
         return match.Success;
     }
-
 }
-

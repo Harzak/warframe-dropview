@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using warframe_dropview.Backend.Models;
 
 namespace warframe_dropview.Backend.DropTableParser;
 
@@ -11,8 +10,9 @@ internal sealed class Program
 
         builder.Configuration.AddJsonFile("appsettings.json", optional: true);
 
-        builder.Services.RegisterMongoDBPlugin(builder.Configuration);
-        builder.Services.AddSingleton<App>();
+        builder.Services.RegisterMongoDBPlugin(builder.Configuration)
+                        .RegisterDropTableParser()
+                        .AddSingleton<App>();
 
         App app = builder.Build().Services.GetRequiredService<App>();
 

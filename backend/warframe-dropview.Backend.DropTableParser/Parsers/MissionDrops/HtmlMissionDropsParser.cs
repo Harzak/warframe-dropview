@@ -2,50 +2,37 @@
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 
-internal sealed partial class HtmlMissionDropsParser
+internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<MissionDrop>
 {
     [GeneratedRegex(@"^(.+?)/(.+?)\s*\((.+?)\)")]
     private static partial Regex HeaderFormat();
 
-    [GeneratedRegex(@"^(.+?)\s*\(([\d.]+)%\)$")]
-    private static partial Regex DropInfoFormat();
-
-    private readonly List<HtmlNode> _drops;
     private string _planet;
     private string _mission;
     private string _type;
     private string _currentRotation;
 
-    public bool IsValid { get; private set; }
-
-    public HtmlMissionDropsParser(List<HtmlNode> drops)
+    public HtmlMissionDropsParser(List<HtmlNode> drops) : base(drops)
     {
-        _drops = drops;
         _planet = string.Empty;
         _mission = string.Empty;
         _type = string.Empty;
         _currentRotation = string.Empty;
-        this.IsValid = ParseHeader(drops[0].InnerText);
     }
 
-    public List<MissionDrop> Parse()
+    protected override List<MissionDrop> ParseInternal()
     {
         List<MissionDrop> allMissionDrops = [];
-        if (!IsValid)
-        {
-            Console.WriteLine("Skipping invalid mission drops: {0}", _drops[0].InnerText);
-            return allMissionDrops;
-        }
         Console.WriteLine("Parsing mission drops for: {0}/{1} ({2})", _planet, _mission, _type);
 
-        for (int i = 0; i<_drops.Count; i++)
+        for (int i = 0; i<base.Drops.Count; i++)
         {
             if (i == 0)
             {
                 continue;
             }
 
-            HtmlNode drop = _drops[i];
+            HtmlNode drop = base.Drops[i];
             List<HtmlNode> cells = drop.ChildNodes.ToList();
             if (cells.Count == 1 && cells.First().Name == "th")
             {
@@ -90,9 +77,9 @@ internal sealed partial class HtmlMissionDropsParser
         return allMissionDrops;
     }
 
-    private bool ParseHeader(string innerText)
+    protected override bool ParseHeader(HtmlNode node)
     {
-        Match match = HeaderFormat().Match(innerText);
+        Match match = HeaderFormat().Match(node.InnerText);
         if (match.Success)
         {
             _planet = match.Groups[1].Value;
