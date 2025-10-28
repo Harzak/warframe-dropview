@@ -50,7 +50,7 @@ public static class DatabaseInitializer
             .Ascending(d => d.Name);
         IndexKeysDefinition<RelicDrop> compoundIndex = Builders<RelicDrop>.IndexKeys
             .Ascending(d => d.Name)
-            .Ascending(d => d.Relic.Type);
+            .Ascending(d => d.Relic.Tier);
 
         await Task.WhenAll(
             relicDrops.Indexes.CreateOneAsync(new CreateIndexModel<RelicDrop>(nameIndex)),

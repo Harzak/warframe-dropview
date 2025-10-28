@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using warframe_dropview.Backend.Models;
+﻿using System.Text.RegularExpressions;
 
-namespace warframe_dropview.Backend.DropTableParser.HtmlParsers.MissionDrops;
+namespace warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 
-internal sealed partial class HtmlMissionDropsParsing
+internal sealed partial class HtmlMissionDropsParser
 {
     [GeneratedRegex(@"^(.+?)/(.+?)\s*\((.+?)\)")]
     private static partial Regex HeaderFormat();
@@ -18,17 +11,21 @@ internal sealed partial class HtmlMissionDropsParsing
     private static partial Regex DropInfoFormat();
 
     private readonly List<HtmlNode> _drops;
-    private string _planet = string.Empty;
-    private string _mission = string.Empty;
-    private string _type = string.Empty;
-    private string _currentRotation = string.Empty;
+    private string _planet;
+    private string _mission;
+    private string _type;
+    private string _currentRotation;
 
     public bool IsValid { get; private set; }
 
-    public HtmlMissionDropsParsing(List<HtmlNode> drops)
+    public HtmlMissionDropsParser(List<HtmlNode> drops)
     {
         _drops = drops;
-        IsValid = ParseHeader(drops[0].InnerText);
+        _planet = string.Empty;
+        _mission = string.Empty;
+        _type = string.Empty;
+        _currentRotation = string.Empty;
+        this.IsValid = ParseHeader(drops[0].InnerText);
     }
 
     public List<MissionDrop> Parse()
@@ -57,6 +54,11 @@ internal sealed partial class HtmlMissionDropsParsing
             }
 
             string itemName = cells[0].InnerText.Trim();
+            MissionDropItemParser itemParser = new(itemName);
+            if (!itemParser.Parse())
+            {
+                throw new InvalidOperationException("Item drop format is invalid: " + itemName);
+            }
 
             Match match = DropInfoFormat().Match(cells[1].InnerText.Trim());
             if (!match.Success)
@@ -70,10 +72,11 @@ internal sealed partial class HtmlMissionDropsParsing
             {
                 Id = Guid.NewGuid().ToString(),
                 Timestamp = DateTime.UtcNow,
-                Name = itemName,
+                Name = itemParser.Name,
                 Rarity = rarity,
                 DropRate = percentage,
-                Subtype = _type,
+                Type = itemParser.Type.ToString(),
+                Subtype = itemParser.SubType,
                 Mission = new Mission
                 {
                     Name = _mission,
@@ -82,7 +85,7 @@ internal sealed partial class HtmlMissionDropsParsing
                     Rotation = _currentRotation
                 }
             });
-            Console.WriteLine("Parsed mission drop: {0} - {1} ({2}%)", itemName, rarity, percentage);
+            Console.WriteLine("Parsed mission drop: {0} ({1} {2}) - {3} ({4}%)", itemParser.Name, itemParser.Type, itemParser.SubType,  rarity, percentage);
         }
         return allMissionDrops;
     }
@@ -97,8 +100,6 @@ internal sealed partial class HtmlMissionDropsParsing
             _type = match.Groups[3].Value;
         }
         return match.Success;
-        //throw new InvalidOperationException("Mission header format is invalid.");
-        //todo other template for IE: Duviri/Endless: Tier 1 (Normal)
     }
 }
 

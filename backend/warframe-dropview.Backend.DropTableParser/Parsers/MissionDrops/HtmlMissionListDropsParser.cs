@@ -1,12 +1,6 @@
-﻿using System.Globalization;
-using System.Numerics;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using warframe_dropview.Backend.Models;
+﻿namespace warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 
-namespace warframe_dropview.Backend.DropTableParser.HtmlParsers.MissionDrops;
-
-internal static class HtmlMissionsListDropsParser
+internal static class HtmlMissionListDropsParser
 {
     private const string MISSION_DELIMITER_CLASS = "blank-row";
 
@@ -17,7 +11,7 @@ internal static class HtmlMissionsListDropsParser
 
         foreach (List<HtmlNode> missionDrops in SplitDropsByMissions(allMissionsRows))
         {
-            HtmlMissionDropsParsing parser = new(missionDrops);
+            HtmlMissionDropsParser parser = new(missionDrops);
             allMissionDrops.AddRange(parser.Parse());
         }
 
@@ -33,7 +27,7 @@ internal static class HtmlMissionsListDropsParser
 
         foreach (HtmlNode row in allMissionsRows)
         {
-            if (row.GetAttributeValue("class", "").Contains(MISSION_DELIMITER_CLASS, StringComparison.CurrentCulture))
+            if (row.GetAttributeValue("class", "").Contains(MISSION_DELIMITER_CLASS, StringComparison.Ordinal))
             {
                 missionRowsChunks.Add(currentChunk);
                 currentChunk = [];
@@ -45,7 +39,5 @@ internal static class HtmlMissionsListDropsParser
         Console.WriteLine("Split {0} rows into {1} missions", allMissionsRows.Count, missionRowsChunks.Count);
         return missionRowsChunks;
     }
-
-
 }
 
