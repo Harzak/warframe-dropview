@@ -20,7 +20,8 @@ internal sealed partial class HtmlListDropParser : IDropParser
     public async Task ParseAsync()
     {
         HtmlDocument doc = new();
-        doc.Load(@"C:\Users\Aurelien\Desktop\Warframe PC Drops.html");
+        string docPath = Path.Combine("Resources", "Warframe-PC-Drops_2025_10_21.html");
+        doc.Load(docPath);
 
         Task<ReadOnlyCollection<MissionDrop>> missionTask = Task.Run(() => ParseMissions(doc.DocumentNode.SelectSingleNode("//table[1]")).AsReadOnly());
         Task<ReadOnlyCollection<RelicDrop>> relicTask = Task.Run(() => ParseRelics(doc.DocumentNode.SelectSingleNode("//table[2]")).AsReadOnly());
