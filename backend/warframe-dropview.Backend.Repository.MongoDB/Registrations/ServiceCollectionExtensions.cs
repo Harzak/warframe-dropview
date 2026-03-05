@@ -17,7 +17,9 @@ public static class ServiceCollectionExtensions
             return client.GetDatabase(settings.DatabaseName);
         });
 
+        services.AddScoped<IMissionDropRepository, MissionDropRepository>();
         services.AddScoped<IRelicDropRepository, RelicDropRepository>();
+        services.AddScoped<IEnemyDropRepository, EnemyDropRepository>();
 
         DocumentsMapping.Map();
 

@@ -2,11 +2,11 @@
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
-global using Microsoft.Extensions.Logging.Console;
 global using System.Globalization;
 global using System.Collections.ObjectModel;
 
 //App
+global using warframe_dropview.Backend.Abstractions.Results;
 global using warframe_dropview.Backend.Models;
 global using warframe_dropview.Backend.Models.Enums;
 global using warframe_dropview.Backend.Plugin.MongoDB.Registrations;

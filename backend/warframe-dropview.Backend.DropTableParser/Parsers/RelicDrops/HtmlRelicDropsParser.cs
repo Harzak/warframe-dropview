@@ -2,6 +2,9 @@
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers.RelicDrops;
 
+/// <summary>
+/// Parses HTML data to extract relic drop information.
+/// </summary>
 internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDrop>
 {
     [GeneratedRegex(@"^(\w+)\s+(\w+)\s+Relic\s*\((.+?)\)")]
@@ -18,6 +21,9 @@ internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDro
         _refinement = string.Empty;
     }
 
+    /// <summary>
+    /// Parses the relic drop data and returns a list of relic drops.
+    /// </summary>
     protected override List<RelicDrop> ParseInternal()
     {
         List<RelicDrop> allRelicDrops = [];

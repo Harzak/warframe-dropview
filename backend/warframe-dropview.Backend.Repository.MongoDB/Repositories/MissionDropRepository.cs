@@ -1,16 +1,27 @@
-﻿
-namespace warframe_dropview.Backend.Plugin.MongoDB.Repositories;
+﻿namespace warframe_dropview.Backend.Plugin.MongoDB.Repositories;
 
 internal sealed class MissionDropRepository : IMissionDropRepository
 {
-    public Task<IEnumerable<MissionDrop>> GetDrops(string itemName)
+    private readonly IMongoCollection<MissionDrop> _db;
+
+    public MissionDropRepository(IMongoDatabase database)
+    {
+        _db = database.GetCollection<MissionDrop>("mission_drops") ?? throw new ArgumentNullException(nameof(database));
+    }
+
+    public Task<IEnumerable<MissionDrop>> SearchDropsAsync(string itemName)
     {
         throw new NotImplementedException();
     }
 
-    public Task InsertDrops(IEnumerable<MissionDrop> drops)
+    public async Task InsertDropsAsync(IEnumerable<MissionDrop> drops)
     {
-        throw new NotImplementedException();
+        if (!drops.Any())
+        {
+            return;
+        }
+
+        await _db.InsertManyAsync(drops).ConfigureAwait(false);
     }
 }
 

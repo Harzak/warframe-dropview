@@ -2,6 +2,9 @@
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers.EnemyDrops;
 
+/// <summary>
+/// Parses HTML data to extract enemy drop information.
+/// </summary>
 internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDrop>
 {
     [GeneratedRegex(@"Mod Drop Chance:\s*([\d.]+)%")]
@@ -15,6 +18,9 @@ internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDro
         _name = string.Empty;
     }
 
+    /// <summary>
+    /// Parses the enemy drop data and returns a list of parsed enemy drops.
+    /// </summary>
     protected override List<EnemyDrop> ParseInternal()
     {
         List<EnemyDrop> allEnemiesDrops = [];

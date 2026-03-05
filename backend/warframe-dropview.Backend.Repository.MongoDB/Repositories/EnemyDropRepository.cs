@@ -1,17 +1,26 @@
-﻿
-
-namespace warframe_dropview.Backend.Plugin.MongoDB.Repositories;
+﻿namespace warframe_dropview.Backend.Plugin.MongoDB.Repositories;
 
 internal sealed class EnemyDropRepository : IEnemyDropRepository
 {
-    public Task<IEnumerable<EnemyDrop>> GetDrops(string itemName)
+    private readonly IMongoCollection<EnemyDrop> _db;
+
+    public EnemyDropRepository(IMongoDatabase database)
+    {
+        _db = database.GetCollection<EnemyDrop>("enemy_drops") ?? throw new ArgumentNullException(nameof(database));
+    }
+
+    public Task<IEnumerable<EnemyDrop>> SearchDrops(string itemName)
     {
         throw new NotImplementedException();
     }
 
-    public Task InsertDrops(IEnumerable<EnemyDrop> drops)
+    public async Task InsertDropsAsync(IEnumerable<EnemyDrop> drops)
     {
-        throw new NotImplementedException();
+        if (!drops.Any())
+        {
+            return;
+        }
+
+        await _db.InsertManyAsync(drops).ConfigureAwait(false);
     }
 }
-

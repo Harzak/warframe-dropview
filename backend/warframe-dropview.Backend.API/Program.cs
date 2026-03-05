@@ -1,11 +1,17 @@
+using warframe_dropview.Backend.API.Extensions;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterMongoDBPlugin(builder.Configuration)
+                .ConfigureHttpJsonOptions(options =>
+                {
+                    options.SerializerOptions.TypeInfoResolver = AppJsonSerializerContext.Default;
+                })
                 .AddEndpointsApiExplorer();
 
 WebApplication app = builder.Build();
 
 
-app.MapGet("/", () => "Hello World!");
+app.MapSearchEndpoints();
 
 await app.RunAsync().ConfigureAwait(false);

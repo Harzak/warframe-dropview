@@ -2,6 +2,9 @@
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers;
 
+/// <summary>
+/// Provides a base implementation for parsing HTML drop tables into a collection of objects of type <typeparamref name="T"/>.
+/// </summary>
 internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> where T : class
 {
     [GeneratedRegex(@"^(.+?)\s*\(([\d.]+)%\)$")]
@@ -10,6 +13,7 @@ internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> wher
     protected readonly ILogger Logger;
     protected readonly List<HtmlNode> Drops;
 
+    /// <inheritdoc />
     public bool IsValid { get; protected set; }
 
     protected BaseHtmlDropParser(List<HtmlNode> drops, ILogger logger)
@@ -19,6 +23,7 @@ internal abstract partial class BaseHtmlDropParser<T> : IDropTableParser<T> wher
         this.IsValid = this.ParseHeader(this.Drops[0]);
     }
 
+    /// <inheritdoc />
     public ReadOnlyCollection<T>? Parse()
     {
         this.IsValid = this.ParseHeader(this.Drops[0]);

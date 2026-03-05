@@ -1,11 +1,25 @@
 ﻿namespace warframe_dropview.Backend.DropTableParser.Parsers.RelicDrops;
 
+/// <summary>
+/// Parses raw data strings to extract information about relic drop items, including their type, subtype, and name.
+/// </summary>
 internal sealed class RelicDropItemParser
 {
     private readonly string _rawData;
 
+    /// <summary>
+    /// Gets the type of relic drop represented with the current parsing instance.
+    /// </summary>
     public ERelicDropType Type { get; private set; }
+
+    /// <summary>
+    /// Gets the subtype associated with the current parsing instance.
+    /// </summary>
     public string SubType { get; private set; }
+
+    /// <summary>
+    /// Gets the name associated with the current parsing instance.
+    /// </summary>
     public string Name { get; private set; }
 
     public RelicDropItemParser(string rawData)
@@ -16,6 +30,9 @@ internal sealed class RelicDropItemParser
         Name = string.Empty;
     }
 
+    /// <summary>
+    /// Parses the raw data to determine the type, name, and subtype of the relic drop.
+    /// </summary>
     public bool Parse()
     {
         if (string.IsNullOrWhiteSpace(_rawData))

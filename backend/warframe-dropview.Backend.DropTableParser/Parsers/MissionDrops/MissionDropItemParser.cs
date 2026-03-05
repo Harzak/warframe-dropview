@@ -1,11 +1,25 @@
 ﻿namespace warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 
+/// <summary>
+/// Parses raw mission drop data to extract and classify information about the drop item.
+/// </summary>
 internal sealed class MissionDropItemParser
 {
     private readonly string _rawData;
 
+    /// <summary>
+    /// Gets the type of mission drop associated with the current parsing instance.
+    /// </summary>
     public EMissionDropType Type { get; private set; }
+
+    /// <summary>
+    /// Gets the subtype associated with the current parsing instance.
+    /// </summary>
     public string SubType { get; private set; }
+
+    /// <summary>
+    /// Gets the name associated with the current parsing instance.
+    /// </summary>
     public string Name { get; private set; }
 
     public MissionDropItemParser(string rawData)
@@ -16,6 +30,9 @@ internal sealed class MissionDropItemParser
         this.Name = string.Empty;
     }
 
+    /// <summary>
+    /// Parses the raw data string and determines the type, name, and subtype of the mission drop.
+    /// </summary>
     public bool Parse()
     {
         if (string.IsNullOrWhiteSpace(_rawData))

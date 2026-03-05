@@ -2,6 +2,11 @@
 
 public interface IRelicDropRepository
 {
-    Task<IEnumerable<RelicDrop>> GetDrops(string primeName);
-    Task InsertDrops(IEnumerable<RelicDrop> drops);
+    Task<IEnumerable<RelicDrop>> SearchDropsAsync(
+        string? dropType,
+        string? partType,
+        string? relicTier,
+        string? dropRarity);
+
+    Task InsertDropsAsync(IEnumerable<RelicDrop> drops);
 }

@@ -2,6 +2,9 @@
 
 namespace warframe_dropview.Backend.DropTableParser.Parsers.MissionDrops;
 
+/// <summary>
+/// Parses HTML content to extract mission drop data.
+/// </summary>
 internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<MissionDrop>
 {
     [GeneratedRegex(@"^(.+?)/(.+?)\s*\((.+?)\)")]
@@ -20,6 +23,9 @@ internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<Missio
         _currentRotation = string.Empty;
     }
 
+    /// <summary>
+    /// Parses mission drop data and returns a list of mission drops.
+    /// </summary>
     protected override List<MissionDrop> ParseInternal()
     {
         List<MissionDrop> allMissionDrops = [];

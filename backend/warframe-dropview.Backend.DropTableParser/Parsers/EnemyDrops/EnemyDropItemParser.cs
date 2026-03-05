@@ -1,11 +1,25 @@
 ﻿namespace warframe_dropview.Backend.DropTableParser.Parsers.EnemyDrops;
 
+/// <summary>
+/// Parses raw data representing an enemy drop item and extracts its type, subtype, and name.
+/// </summary>
 internal sealed class EnemyDropItemParser
 {
     private readonly string _rawData;
 
+    /// <summary>
+    /// Gets the type of enemy drop associated with the current parsing instance.
+    /// </summary>
     public EEnemyDropType Type { get; private set; }
+
+    /// <summary>
+    /// Gets the subtype associated with the current parsing instance.
+    /// </summary>
     public string SubType { get; private set; }
+
+    /// <summary>
+    /// Gets the name associated with the current parsing instance.
+    /// </summary>
     public string Name { get; private set; }
 
     public EnemyDropItemParser(string rawData)
@@ -16,6 +30,9 @@ internal sealed class EnemyDropItemParser
         this.Name = string.Empty;
     }
 
+    /// <summary>
+    /// Parses the raw data string and determines the type and name of the enemy drop.
+    /// </summary>
     public bool Parse()
     {
         if (string.IsNullOrWhiteSpace(_rawData))

@@ -1,5 +1,8 @@
 ﻿namespace warframe_dropview.Backend.DropTableParser.Extensions;
 
+/// <summary>
+/// Provides extension methods for registering drop table parsers in an <see cref="IServiceCollection"/>.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection RegisterDropTableParser(this IServiceCollection services)

@@ -2,6 +2,6 @@
 
 public interface IMissionDropRepository
 {
-    Task<IEnumerable<MissionDrop>> GetDrops(string itemName);
-    Task InsertDrops(IEnumerable<MissionDrop> drops);
+    Task<IEnumerable<MissionDrop>> SearchDropsAsync(string itemName);
+    Task InsertDropsAsync(IEnumerable<MissionDrop> drops);
 }

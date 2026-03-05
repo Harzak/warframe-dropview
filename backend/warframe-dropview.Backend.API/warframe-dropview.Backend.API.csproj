@@ -29,6 +29,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="MediatR" Version="13.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\warframe-dropview.Backend.Repository.MongoDB\warframe-dropview.Backend.Plugin.MongoDB.csproj" />
 	</ItemGroup>
 
