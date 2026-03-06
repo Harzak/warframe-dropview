@@ -13,7 +13,7 @@ services:
       # Override the connection string so the API reaches the mongodb service
       # by its service name instead of "localhost".
       - MongoDB__ConnectionString=mongodb://mongodb:27017
-      - MongoDB__DatabaseName=warframedrop-mongodb
+      - MongoDB__DatabaseName=mongodb-1
     depends_on:
       mongodb:
         condition: service_healthy  # wait until MongoDB passes its health check

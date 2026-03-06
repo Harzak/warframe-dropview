@@ -10,8 +10,10 @@ builder.Services.RegisterMongoDBPlugin(builder.Configuration)
                 })
                 .AddEndpointsApiExplorer();
 
+
 WebApplication app = builder.Build();
 
 app.MapSearchEndpoints();
+app.MapHealthCheckEndpoints();
 
 await app.RunAsync().ConfigureAwait(false);

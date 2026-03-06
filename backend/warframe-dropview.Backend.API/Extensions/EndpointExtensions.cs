@@ -1,4 +1,6 @@
-﻿using AspNet = Microsoft.AspNetCore.Http;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using AspNet = Microsoft.AspNetCore.Http;
 
 namespace warframe_dropview.Backend.API.Extensions;
 
@@ -7,6 +9,7 @@ namespace warframe_dropview.Backend.API.Extensions;
 /// </summary>
 internal static class EndpointExtensions
 {
+
     /// <summary>
     /// Adds search endpoints for relics, mods, and prime parts to the endpoint route builder.
     /// </summary>
@@ -35,4 +38,16 @@ internal static class EndpointExtensions
         return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
     }
 
+    internal static void MapHealthCheckEndpoints(this IEndpointRouteBuilder app)
+    {
+        app.MapGet("/api/test", HandleHealthCheckEndpoint);
+    }
+
+    private static async Task<AspNet.IResult> HandleHealthCheckEndpoint(IMongoDatabase db)
+    {
+        await db.RunCommandAsync((Command<BsonDocument>)"{ ping: 1 }").ConfigureAwait(false);
+        await Task.Delay(100).ConfigureAwait(false);
+
+        return Results.Ok($"Cluster state: {db.Client.Cluster.Description.State.ToString()}");
+    }
 }
