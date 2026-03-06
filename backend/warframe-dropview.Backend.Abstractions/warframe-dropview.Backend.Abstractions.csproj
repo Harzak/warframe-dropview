@@ -22,12 +22,4 @@
 		<ProjectReference Include="..\warframe-dropview.Backend.Models\warframe-dropview.Backend.Models.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Abstractions\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Abstractions\.editorconfig" />
-	</ItemGroup>
-
 </Project>

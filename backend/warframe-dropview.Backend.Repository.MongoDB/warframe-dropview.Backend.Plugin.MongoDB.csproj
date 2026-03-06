@@ -20,12 +20,4 @@
 		<ProjectReference Include="..\warframe-dropview.Backend.Abstractions\warframe-dropview.Backend.Abstractions.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Repository.MongoDB\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Repository.MongoDB\.editorconfig" />
-	</ItemGroup>
-
 </Project>

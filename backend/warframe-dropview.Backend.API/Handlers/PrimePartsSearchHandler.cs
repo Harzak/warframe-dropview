@@ -14,6 +14,7 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
 
     public async Task<OperationResult<SearchResultDto>> Handle(PrimePartsSearchQuery request, CancellationToken cancellationToken)
     {
+        
         OperationResult<SearchResultDto> result = new();
 
         if (request is null)
@@ -44,6 +45,6 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
             searchResult.RelicDrops.Add(dto);
         }
 
-        return result.WithValue(searchResult);
+        return result.WithValue(searchResult).WithSuccess();
     }
 }

@@ -36,12 +36,4 @@
 		<ProjectReference Include="..\warframe-dropview.Backend.Repository.MongoDB\warframe-dropview.Backend.Plugin.MongoDB.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.DropTableParser\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.DropTableParser\.editorconfig" />
-	</ItemGroup>
-
 </Project>

@@ -12,12 +12,4 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Models\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Workspaces\warframe-dropview\backend\warframe-dropview.Backend.Models\.editorconfig" />
-	</ItemGroup>
-
 </Project>

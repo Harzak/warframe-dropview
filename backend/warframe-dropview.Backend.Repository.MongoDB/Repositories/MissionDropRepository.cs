@@ -9,9 +9,20 @@ internal sealed class MissionDropRepository : IMissionDropRepository
         _db = database.GetCollection<MissionDrop>("mission_drops") ?? throw new ArgumentNullException(nameof(database));
     }
 
-    public Task<IEnumerable<MissionDrop>> SearchDropsAsync(string itemName)
+    public async Task<IEnumerable<MissionDrop>> SearchDropsAsync(string? itemName)
     {
-        throw new NotImplementedException();
+        FilterDefinitionBuilder<MissionDrop> builder = Builders<MissionDrop>.Filter;
+        FilterDefinition<MissionDrop> filter = builder.Empty;
+        
+        if (!string.IsNullOrWhiteSpace(itemName))
+        {
+            filter &= builder.Eq(d => d.Name, itemName);
+        }
+
+        IAsyncCursor<MissionDrop> cursor = await _db.FindAsync(filter).ConfigureAwait(false);
+        List<MissionDrop> results = await cursor.ToListAsync().ConfigureAwait(false);
+
+        return results;
     }
 
     public async Task InsertDropsAsync(IEnumerable<MissionDrop> drops)

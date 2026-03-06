@@ -8,13 +8,16 @@ internal sealed class App
     private readonly IMissionDropRepository _missionDropRepository;
     private readonly IRelicDropRepository _relicDropRepository;
     private readonly IEnemyDropRepository _enemyDropRepository;
+    private readonly IMongoDatabase _database;  
 
     public App(
+        IMongoDatabase database,
         IDropParser dropParser, 
         IMissionDropRepository missionDropRepository, 
         IRelicDropRepository relicDropRepository,
         IEnemyDropRepository enemyDropRepository)
     {
+        _database = database;
         _dropParser = dropParser;
         _missionDropRepository = missionDropRepository;
         _relicDropRepository = relicDropRepository;
@@ -23,6 +26,8 @@ internal sealed class App
 
     public async Task RunAsync()
     {
+        await DatabaseInitializer.InitializeAsync(_database).ConfigureAwait(false);
+
         OperationResult parsingResult = await _dropParser.ParseAsync().ConfigureAwait(false);
 
         if (parsingResult.IsFailed)

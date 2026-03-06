@@ -17,21 +17,22 @@ internal static class EndpointExtensions
         app.MapGet("/api/primeparts/search", HandlePrimePartsSearch);
     }
 
-    private static async Task<AspNet.IResult> HandleRelicsSearch(RelicsSearchQuery query, ISender mediator)
+    private static async Task<AspNet.IResult> HandleRelicsSearch([AsParameters] RelicsSearchQuery query, ISender mediator)
     {
         OperationResult<SearchResultDto> result = await mediator.Send(query).ConfigureAwait(false);
         return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
     }
 
-    private static async Task<AspNet.IResult> HandleModsSearch(ModsSearchQuery query, ISender mediator)
+    private static async Task<AspNet.IResult> HandleModsSearch([AsParameters] ModsSearchQuery query, ISender mediator)
     {
         OperationResult<SearchResultDto> result = await mediator.Send(query).ConfigureAwait(false);
         return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
     }
 
-    private static async Task<AspNet.IResult> HandlePrimePartsSearch(PrimePartsSearchQuery query, ISender mediator)
+    private static async Task<AspNet.IResult> HandlePrimePartsSearch([AsParameters] PrimePartsSearchQuery query, ISender mediator)
     {
         OperationResult<SearchResultDto> result = await mediator.Send(query).ConfigureAwait(false);
         return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
     }
+
 }
