@@ -1,0 +1,11 @@
+@use "../abstracts/colors" as colors;
+
+$theme-background: colors.$color-darker-black;
+$theme-primary: colors.$color-dark-grey;
+$theme-text: colors.$color-light-white;
+
+body {
+  height: 100%;
+  background-color: $theme-background;
+  color: $theme-text;
+}

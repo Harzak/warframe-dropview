@@ -1,19 +1,8 @@
-/* Global reset and base styles */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
+@use "styles/abstracts/colors";
+@use "styles/abstracts/variables";
+@use "styles/base/base";
+@use "styles/base/typography";
+@use "styles/base/reset";
+@use "styles/themes/theme-default";
+@use "styles/utilities/backgrounds";
+@use "styles/utilities/spacing";

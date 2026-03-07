@@ -1,0 +1,8 @@
+<h2>Mods</h2>
+
+@if (result(); as data) {
+  <app-mission-drop-table [drops]="data.missionDrops" />
+  <app-enemy-drop-table [drops]="data.enemyDrops" />
+} @else {
+  <p>Loading…</p>
+}

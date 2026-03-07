@@ -1,0 +1,32 @@
+@if (drops.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Mission</th>
+        <th>Mission Type</th>
+        <th>Planet</th>
+        <th>Rotation</th>
+        <th>Drop Rate</th>
+        <th>Rarity</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (drop of drops; track drop.name + drop.missionName + drop.rotation) {
+        <tr>
+          <td>{{ drop.name }}</td>
+          <td>{{ drop.type }}</td>
+          <td>{{ drop.missionName }}</td>
+          <td>{{ drop.missionType }}</td>
+          <td>{{ drop.planet }}</td>
+          <td>{{ drop.rotation }}</td>
+          <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
+          <td>{{ drop.rarity }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>No mission drops found.</p>
+}

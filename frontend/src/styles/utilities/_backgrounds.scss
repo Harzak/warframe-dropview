@@ -1,0 +1,9 @@
+@use "../abstracts/colors" as colors;
+
+.bg-primary {
+  background-color: colors.$color-darker-black;
+}
+
+.bg-secondary {
+  background-color: colors.$color-dark-black;
+}
