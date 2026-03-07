@@ -1,45 +1,10 @@
 <div class="search-bar">
-  <select [ngModel]="activeContext" (ngModelChange)="onContextChange($event)">
+  <input class="search-input" type="text" [(ngModel)]="searchTerm" 
+    placeholder="What item are you looking for?"  (keyup.enter)="onSearch()" />
+
+  <select class="active-context-select" [ngModel]="activeContext" (ngModelChange)="onContextChange($event)">
     @for (ctx of contexts; track ctx.value) {
       <option [value]="ctx.value">{{ ctx.label }}</option>
     }
   </select>
-
-  @switch (activeContext) {
-    @case ('prime-parts') {
-      <select [(ngModel)]="partType">
-        <option value="">All Part Types</option>
-        @for (pt of partTypes; track pt) {
-          <option [value]="pt">{{ pt }}</option>
-        }
-      </select>
-
-      <select [(ngModel)]="relicTier">
-        <option value="">All Tiers</option>
-        @for (tier of relicTiers; track tier) {
-          <option [value]="tier">{{ tier }}</option>
-        }
-      </select>
-
-      <select [(ngModel)]="dropRarity">
-        <option value="">All Rarities</option>
-        @for (rarity of rarities; track rarity) {
-          <option [value]="rarity">{{ rarity }}</option>
-        }
-      </select>
-    }
-    @case ('relics') {
-      <input
-        type="text"
-        [(ngModel)]="relicName"
-        placeholder="Relic name (e.g. Axi S9)…"
-        (keyup.enter)="onSearch()"
-      />
-    }
-    @case ('mods') {
-      <!-- Mods returns all results — no search filters -->
-    }
-  }
-
-  <button (click)="onSearch()">Search</button>
 </div>

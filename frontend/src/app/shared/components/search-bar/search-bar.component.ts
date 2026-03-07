@@ -22,17 +22,8 @@ export class SearchBarComponent {
     { value: 'mods', label: 'Mods' },
   ];
 
-  readonly partTypes = ['Blueprint', 'Neuroptics', 'Chassis', 'Systems', 'Barrel'];
-  readonly relicTiers = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem'];
-  readonly rarities = ['Common', 'Uncommon', 'Rare', 'Legendary'];
-
+  searchTerm = '';
   activeContext: SearchContext = this.contextFromUrl(this.router.url);
-
-  // Filter values — form state only, source of truth is the URL
-  partType = '';
-  relicTier = '';
-  dropRarity = '';
-  relicName = '';
 
   constructor() {
     this.syncFromUrl();
@@ -45,25 +36,11 @@ export class SearchBarComponent {
   }
 
   onContextChange(context: SearchContext): void {
-    this.partType = '';
-    this.relicTier = '';
-    this.dropRarity = '';
-    this.relicName = '';
     this.router.navigate([`/${context}`]);
   }
 
   onSearch(): void {
     const queryParams: Record<string, string> = {};
-
-    if (this.activeContext === 'prime-parts') {
-      if (this.partType) queryParams['partType'] = this.partType;
-      if (this.relicTier) queryParams['relicTier'] = this.relicTier;
-      if (this.dropRarity) queryParams['dropRarity'] = this.dropRarity;
-    } else if (this.activeContext === 'relics') {
-      if (this.relicName) queryParams['relicName'] = this.relicName;
-    }
-    // mods: no query params, always fetch all
-
     this.router.navigate([`/${this.activeContext}`], { queryParams });
   }
 
@@ -74,11 +51,6 @@ export class SearchBarComponent {
   }
 
   private syncFromUrl(): void {
-    const params = this.router.parseUrl(this.router.url).queryParams;
     this.activeContext = this.contextFromUrl(this.router.url);
-    this.partType = params['partType'] ?? '';
-    this.relicTier = params['relicTier'] ?? '';
-    this.dropRarity = params['dropRarity'] ?? '';
-    this.relicName = params['relicName'] ?? '';
   }
 }
