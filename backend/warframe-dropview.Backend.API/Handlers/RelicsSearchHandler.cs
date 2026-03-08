@@ -23,7 +23,7 @@ internal sealed class RelicsSearchHandler : IRequestHandler<RelicsSearchQuery, O
             return result.WithError("Request cannot be null.");
         }
 
-        IEnumerable<MissionDrop> drops = await _missionDropRepository.SearchDropsAsync(request.RelicName).ConfigureAwait(false);
+        IEnumerable<MissionDrop> drops = await _missionDropRepository.SearchDropsAsync(request.ItemName, request.Offset, request.Limit).ConfigureAwait(false);
 
         SearchResultDto searchResult = new();
 

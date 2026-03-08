@@ -17,10 +17,10 @@ body {
 }
 
 .p-select-overlay {
-  --p-select-overlay-border-color: #{colors.$color-dark-grey};
   --p-select-option-color: #{colors.$color-light-white};
   --p-select-option-focus-color: #{colors.$color-lighter-green};
   --p-select-option-selected-color: #{colors.$color-light-white};
+  --p-select-overlay-border-color: #{colors.$color-dark-grey};
   --p-select-overlay-background: #{colors.$color-darker-black};
   --p-select-option-focus-background: #{colors.$color-darker-grey};
   --p-select-option-selected-background: #{colors.$color-dark-grey};
@@ -32,4 +32,15 @@ body {
   --p-inputtext-border-color: #{colors.$color-dark-grey};
   --p-inputtext-focus-border-color: #{colors.$color-lighter-green};
   --p-inputtext-placeholder-color: #{colors.$color-light-grey};
+}
+
+.p-datatable {
+  --p-datatable-row-background: #{colors.$color-dark-black};
+  --p-datatable-row-color: #{colors.$color-light-white};
+  --p-datatable-header-cell-color: #{colors.$color-light-white};
+  --p-datatable-header-cell-background: #{colors.$color-dark-black};
+}
+
+.p-datatable-header {
+  --p-datatable-header-background: #{colors.$color-dark-black};
 }

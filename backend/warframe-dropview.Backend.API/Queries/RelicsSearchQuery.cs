@@ -1,6 +1,6 @@
 ﻿namespace warframe_dropview.Backend.API.Queries;
 
-internal sealed class RelicsSearchQuery : IRequest<OperationResult<SearchResultDto>>
+internal sealed class RelicsSearchQuery : BaseSearchQuery, IRequest<OperationResult<SearchResultDto>>
 {
-    public string? RelicName { get; set; } 
+
 }

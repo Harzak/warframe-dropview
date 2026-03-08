@@ -2,6 +2,6 @@
 
 public interface IEnemyDropRepository
 {
-    Task<IEnumerable<EnemyDrop>> SearchDrops(string itemName);
+    Task<IEnumerable<EnemyDrop>> SearchDrops(string itemName, int? offset, int? limit);
     Task InsertDropsAsync(IEnumerable<EnemyDrop> drops);
 }

@@ -9,7 +9,7 @@ internal sealed class MissionDropRepository : IMissionDropRepository
         _db = database.GetCollection<MissionDrop>("mission_drops") ?? throw new ArgumentNullException(nameof(database));
     }
 
-    public async Task<IEnumerable<MissionDrop>> SearchDropsAsync(string? itemName)
+    public async Task<IEnumerable<MissionDrop>> SearchDropsAsync(string? itemName, int? offset, int? limit)
     {
         FilterDefinitionBuilder<MissionDrop> builder = Builders<MissionDrop>.Filter;
         FilterDefinition<MissionDrop> filter = builder.Empty;
@@ -19,8 +19,10 @@ internal sealed class MissionDropRepository : IMissionDropRepository
             filter &= builder.Eq(d => d.Name, itemName);
         }
 
-        IAsyncCursor<MissionDrop> cursor = await _db.FindAsync(filter).ConfigureAwait(false);
-        List<MissionDrop> results = await cursor.ToListAsync().ConfigureAwait(false);
+        List<MissionDrop> results = await _db.Find(filter)
+            .Skip(offset ?? 0)
+            .Limit(limit ?? 0)
+            .ToListAsync().ConfigureAwait(false);
 
         return results;
     }

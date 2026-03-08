@@ -1,7 +1,9 @@
-<h2>Prime Parts</h2>
+<div class="prime-parts-container">
+  <h2 class="prime-parts-header">Prime Parts</h2>
 
-@if (result(); as data) {
-  <app-relic-drop-table [drops]="data.relicDrops" />
-} @else {
-  <p>Loading…</p>
-}
+  @if (result(); as data) {
+    <app-relic-drop-table [drops]="data.relicDrops" />
+  } @else {
+    <p>Loading…</p>
+  }
+</div>

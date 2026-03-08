@@ -13,7 +13,9 @@ internal sealed class RelicDropRepository : IRelicDropRepository
          string? dropType,
          string? partType,
          string? relicTier,
-         string? dropRarity)
+         string? dropRarity,
+         int? offset,
+         int? limit)
     {
         FilterDefinitionBuilder<RelicDrop> builder = Builders<RelicDrop>.Filter;
         FilterDefinition<RelicDrop> filter = builder.Empty;
@@ -38,8 +40,10 @@ internal sealed class RelicDropRepository : IRelicDropRepository
             filter &= builder.Eq(d => d.Rarity, dropRarity);
         }
 
-        IAsyncCursor<RelicDrop> cursor = await _db.FindAsync(filter).ConfigureAwait(false);
-        List<RelicDrop> results = await cursor.ToListAsync().ConfigureAwait(false);
+        List<RelicDrop> results = await _db.Find(filter)
+            .Skip(offset ?? 0)
+            .Limit(limit ?? 0)
+            .ToListAsync().ConfigureAwait(false);
 
         return results;
     }

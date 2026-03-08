@@ -1,0 +1,11 @@
+.prime-parts-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 1200px;
+  margin: 50px auto;
+
+  .prime-parts-header {
+    margin-bottom: 1rem;
+  }
+}

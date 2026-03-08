@@ -26,7 +26,9 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
            request.DropType,
            request.PartType,
            request.RelicTier,
-           request.DropRarity).ConfigureAwait(false);
+           request.DropRarity,
+           request.Offset,
+           request.Limit).ConfigureAwait(false);
 
         SearchResultDto searchResult = new();
 

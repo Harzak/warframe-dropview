@@ -1,6 +1,6 @@
 @if (drops.length > 0) {
-  <table>
-    <thead>
+  <p-table [value]="drops">
+    <ng-template #header>
       <tr>
         <th>Name</th>
         <th>Type</th>
@@ -10,21 +10,19 @@
         <th>Drop Rate</th>
         <th>Rarity</th>
       </tr>
-    </thead>
-    <tbody>
-      @for (drop of drops; track drop.name + drop.relicCode) {
-        <tr>
-          <td>{{ drop.name }}</td>
-          <td>{{ drop.type }}</td>
-          <td>{{ drop.partType }}</td>
-          <td>{{ drop.relicTier }}</td>
-          <td>{{ drop.relicCode }}</td>
-          <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
-          <td>{{ drop.rarity }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    </ng-template>
+    <ng-template #body let-drop>
+      <tr>
+        <td>{{ drop.name }}</td>
+        <td>{{ drop.type }}</td>
+        <td>{{ drop.partType }}</td>
+        <td>{{ drop.relicTier }}</td>
+        <td>{{ drop.relicCode }}</td>
+        <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
+        <td>{{ drop.rarity }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 } @else {
   <p>No relic drops found.</p>
 }

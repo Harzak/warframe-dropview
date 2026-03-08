@@ -6,7 +6,9 @@ public interface IRelicDropRepository
         string? dropType,
         string? partType,
         string? relicTier,
-        string? dropRarity);
+        string? dropRarity,
+        int? offset,
+        int? limit);
 
     Task InsertDropsAsync(IEnumerable<RelicDrop> drops);
 }

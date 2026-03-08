@@ -14,6 +14,7 @@ type SearchContext = 'prime-parts' | 'relics' | 'mods';
   styleUrl: './search-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class SearchBarComponent {
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);

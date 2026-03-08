@@ -24,7 +24,7 @@ export class DropApiService {
     if (query.partType) params = params.set('partType', query.partType);
     if (query.relicTier) params = params.set('relicTier', query.relicTier);
     if (query.dropRarity) params = params.set('dropRarity', query.dropRarity);
-    return this.http.get<SearchResult>(`/primeparts/search`, {
+    return this.http.get<SearchResult>(`/primeparts/search?limit=20`, {
       params,
     });
   }
