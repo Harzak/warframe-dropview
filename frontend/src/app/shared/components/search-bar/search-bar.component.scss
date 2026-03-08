@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 40%;
     height: 50px;
     margin: 0 auto;
     border: 1px solid colors.$color-dark-grey;
@@ -17,24 +17,10 @@
     height: 100%;
     width: 100%;
     padding: 10px;
-    color: colors.$color-light-white;
-    background-color: transparent;
-}
-
-.search-input:focus {
-    outline: none;
-}
-
-.search-input::placeholder {  
-    color: colors.$color-dark-grey;
+    margin: 5px;
 }
 
 .active-context-select {
-    height: 100%;
-    margin: 10px;
-    padding: 0 10px;
     border: none;
-    background-color: transparent;
-    color: colors.$color-light-white;
-    
+    margin: 5px;;
 }

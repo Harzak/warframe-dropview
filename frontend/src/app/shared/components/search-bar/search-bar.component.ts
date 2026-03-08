@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { Select } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
 
 type SearchContext = 'prime-parts' | 'relics' | 'mods';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [FormsModule],
+  imports: [FormsModule, Select, InputTextModule],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
