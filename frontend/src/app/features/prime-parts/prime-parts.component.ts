@@ -17,16 +17,15 @@ export class PrimePartsComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly api = inject(DropApiService);
 
-  result = () => {};
-  // result = toSignal(
-  //   this.route.queryParams.pipe(
-  //     switchMap(params =>
-  //       this.api.searchPrimeParts({
-  //         partType: params['partType'],
-  //         relicTier: params['relicTier'],
-  //         dropRarity: params['dropRarity'],
-  //       })
-  //     )
-  //   )
-  // );
+  result = toSignal(
+    this.route.queryParams.pipe(
+      switchMap(params =>
+        this.api.searchPrimeParts({
+          partType: params['partType'],
+          relicTier: params['relicTier'],
+          dropRarity: params['dropRarity'],
+        })
+      )
+    )
+  );
 }

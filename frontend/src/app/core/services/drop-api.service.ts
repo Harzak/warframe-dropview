@@ -18,15 +18,13 @@ export interface RelicsQuery {
 @Injectable({ providedIn: 'root' })
 export class DropApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api';
-
   searchPrimeParts(query: PrimePartsQuery = {}): Observable<SearchResult> {
     let params = new HttpParams();
     if (query.dropType) params = params.set('dropType', query.dropType);
     if (query.partType) params = params.set('partType', query.partType);
     if (query.relicTier) params = params.set('relicTier', query.relicTier);
     if (query.dropRarity) params = params.set('dropRarity', query.dropRarity);
-    return this.http.get<SearchResult>(`${this.baseUrl}/primeparts/search`, {
+    return this.http.get<SearchResult>(`/primeparts/search`, {
       params,
     });
   }
@@ -34,12 +32,12 @@ export class DropApiService {
   searchRelics(query: RelicsQuery = {}): Observable<SearchResult> {
     let params = new HttpParams();
     if (query.relicName) params = params.set('relicName', query.relicName);
-    return this.http.get<SearchResult>(`${this.baseUrl}/relics/search`, {
+    return this.http.get<SearchResult>(`/relics/search`, {
       params,
     });
   }
 
   searchMods(): Observable<SearchResult> {
-    return this.http.get<SearchResult>(`${this.baseUrl}/mods/search`);
+    return this.http.get<SearchResult>(`/mods/search`);
   }
 }
