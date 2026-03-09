@@ -1,5 +1,18 @@
 <div class="prime-parts-container">
-  <h2 class="prime-parts-header">Prime Parts</h2>
+  <div class="filter-container">
+    <p-multiselect
+      class="multiselect-rarity"
+      [options]="rarities"
+      [ngModel]="selectedRarities()"
+      (ngModelChange)="selectedRarities.set($event)"
+      [maxSelectedLabels]="5"
+      placeholder="Select Rarities"
+      display="chip"
+      filter="false"
+    />
+  </div>
+
+  <h2 class="prime-parts-header">Relic drops</h2>
 
   @if (result() === undefined) {
     <p>Loading…</p>

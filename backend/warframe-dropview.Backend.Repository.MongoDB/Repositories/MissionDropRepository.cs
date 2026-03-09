@@ -16,7 +16,7 @@ internal sealed class MissionDropRepository : IMissionDropRepository
         
         if (!string.IsNullOrWhiteSpace(itemName))
         {
-            filter &= builder.Eq(d => d.Name, itemName);
+            filter &= builder.Regex(d => d.Name, new BsonRegularExpression(itemName, "i"));
         }
 
         List<MissionDrop> results = await _db.Find(filter)

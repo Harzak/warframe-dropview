@@ -55,13 +55,13 @@ internal sealed partial class HtmlEnemyDropsParser : BaseHtmlDropParser<EnemyDro
             {
                 Id = Guid.NewGuid().ToString(),
                 Timestamp = DateTime.UtcNow,
-                Name = itemParser.Name,
-                Rarity = rarity,
+                Name = itemParser.Name.ToLowerInvariant(),
+                Rarity = rarity.ToLowerInvariant(),
                 DropRate = percentage,
-                Type = itemParser.Type.ToString(),
+                Type = itemParser.Type.ToString().ToLowerInvariant(),
                 Enemy = new Enemy
                 {
-                    Name = _name,
+                    Name = _name.ToLowerInvariant(),
                     ModDropRate = _modDropChance.ToString(CultureInfo.InvariantCulture)
                 }
             });

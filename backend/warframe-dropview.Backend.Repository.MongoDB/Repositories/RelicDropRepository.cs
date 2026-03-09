@@ -43,7 +43,8 @@ internal sealed class RelicDropRepository : IRelicDropRepository
 
         if (!string.IsNullOrWhiteSpace(dropRarity))
         {
-            filter &= builder.Eq(d => d.Rarity, dropRarity);
+            IEnumerable<string> rarities = dropRarity.Split(',').Select(r => r.Trim().ToLowerInvariant());
+            filter &= builder.In(d => d.Rarity, rarities);
         }
 
         List<RelicDrop> results = await _db.Find(filter)

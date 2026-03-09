@@ -65,17 +65,17 @@ internal sealed partial class HtmlMissionDropsParser : BaseHtmlDropParser<Missio
             {
                 Id = Guid.NewGuid().ToString(),
                 Timestamp = DateTime.UtcNow,
-                Name = itemParser.Name,
-                Rarity = rarity,
+                Name = itemParser.Name.ToLowerInvariant(),
+                Rarity = rarity.ToLowerInvariant(),
                 DropRate = percentage,
-                Type = itemParser.Type.ToString(),
-                Subtype = itemParser.SubType,
+                Type = itemParser.Type.ToString().ToLowerInvariant(),
+                Subtype = itemParser.SubType.ToLowerInvariant(),
                 Mission = new Mission
                 {
-                    Name = _mission,
-                    Planet = _planet,
-                    Type = _type,
-                    Rotation = _currentRotation
+                    Name = _mission.ToLowerInvariant(),
+                    Planet = _planet.ToLowerInvariant(),
+                    Type = _type.ToLowerInvariant(),
+                    Rotation = _currentRotation.ToLowerInvariant()
                 }
             });
             base.Logger.LogParsedMissionDrop(itemParser.Name, itemParser.Type.ToString(), itemParser.SubType, rarity, percentage);

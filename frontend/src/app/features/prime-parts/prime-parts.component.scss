@@ -1,11 +1,26 @@
+@use '../../../styles/abstracts/colors' as colors;
+
 .prime-parts-container {
   display: flex;
   flex-direction: column;
   width: 80%;
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 30px auto;
 
   .prime-parts-header {
     margin-bottom: 1rem;
   }
+}
+
+.multiselect-rarity {
+  width: 600px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 73%;
+  height: 100px;
+  margin: 0 auto;
 }

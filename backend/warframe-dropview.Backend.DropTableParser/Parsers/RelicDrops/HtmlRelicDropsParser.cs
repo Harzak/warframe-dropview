@@ -65,16 +65,16 @@ internal sealed partial class HtmlRelicDropsParser : BaseHtmlDropParser<RelicDro
             {
                 Id = Guid.NewGuid().ToString(),
                 Timestamp = DateTime.UtcNow,
-                Name = itemParser.Name,
-                Rarity = rarity,
+                Name = itemParser.Name.ToLowerInvariant(),
+                Rarity = rarity.ToLowerInvariant(),
                 DropRate = percentage,
-                Type = itemParser.Type.ToString(),
-                Subtype = itemParser.SubType,
+                Type = itemParser.Type.ToString().ToLowerInvariant(),
+                Subtype = itemParser.SubType.ToLowerInvariant(),
                 Relic = new Relic
                 {
-                    Code = _code,
-                    Refinement = _refinement,
-                    Tier = _tier
+                    Code = _code.ToLowerInvariant(),
+                    Refinement = _refinement.ToLowerInvariant(),
+                    Tier = _tier.ToLowerInvariant()
                 }
             });
             base.Logger.LogParsedRelicDrop(itemParser.Name, itemParser.Type.ToString(), itemParser.SubType, rarity, percentage);

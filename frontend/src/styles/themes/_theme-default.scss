@@ -1,4 +1,4 @@
-@use "../abstracts/colors" as colors;
+@use '../abstracts/colors' as colors;
 
 body {
   height: 100%;
@@ -21,9 +21,39 @@ body {
   --p-select-option-focus-color: #{colors.$color-lighter-green};
   --p-select-option-selected-color: #{colors.$color-light-white};
   --p-select-overlay-border-color: #{colors.$color-dark-grey};
-  --p-select-overlay-background: #{colors.$color-darker-black};
+  --p-select-overlay-background: #{colors.$color-dark-black};
   --p-select-option-focus-background: #{colors.$color-darker-grey};
   --p-select-option-selected-background: #{colors.$color-dark-grey};
+}
+
+.p-multiselect {
+  --p-multiselect-background: #{colors.$color-dark-black};
+  --p-multiselect-border-color: #{colors.$color-dark-grey};
+  --p-multiselect-color: #{colors.$color-light-white};
+  --p-multiselect-hover-border-color: #{colors.$color-light-white};
+  --p-multiselect-focus-border-color: #{colors.$color-light-white};
+  --p-multiselect-dropdown-color: #{colors.$color-light-white};
+  --p-multiselect-placeholder-color: #{colors.$color-light-grey};
+}
+
+.p-multiselect-overlay {
+  --p-multiselect-option-color: #{colors.$color-light-white};
+  --p-multiselect-option-focus-color: #{colors.$color-lighter-green};
+  --p-multiselect-option-selected-color: #{colors.$color-light-white};
+  --p-multiselect-overlay-border-color: #{colors.$color-dark-grey};
+  --p-multiselect-overlay-background: #{colors.$color-dark-black};
+  --p-multiselect-option-focus-background: #{colors.$color-darker-grey};
+  --p-multiselect-option-selected-background: #{colors.$color-dark-grey};
+}
+
+.p-checkbox {
+  --p-checkbox-checked-background: #{colors.$color-dark-green};
+}
+
+.p-chip {
+  --p-chip-background: #{colors.$color-dark-grey};
+  --p-chip-color: #{colors.$color-light-white};
+  --p-chip-remove-icon-color: #{colors.$color-light-white};
 }
 
 .p-inputtext {
