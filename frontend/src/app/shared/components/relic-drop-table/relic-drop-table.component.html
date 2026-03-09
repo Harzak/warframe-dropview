@@ -1,25 +1,21 @@
 @if (drops.length > 0) {
-  <p-table [value]="drops">
+  <p-table [value]="drops" size="small" showGridlines="true">
     <ng-template #header>
       <tr>
         <th>Name</th>
-        <th>Type</th>
         <th>Part Type</th>
-        <th>Relic Tier</th>
-        <th>Relic Code</th>
-        <th>Drop Rate</th>
+        <th>Relic</th>
         <th>Rarity</th>
+        <th>Drop Rate</th>
       </tr>
     </ng-template>
     <ng-template #body let-drop>
       <tr>
-        <td>{{ drop.name }}</td>
-        <td>{{ drop.type }}</td>
-        <td>{{ drop.partType }}</td>
-        <td>{{ drop.relicTier }}</td>
-        <td>{{ drop.relicCode }}</td>
+        <td>{{ drop.name | titlecase }}</td>
+        <td>{{ drop.partType | titlecase }}</td>
+        <td>{{ drop.relicTier + ' ' + drop.relicCode | titlecase }}</td>
+        <td>{{ drop.rarity | titlecase }}</td>
         <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
-        <td>{{ drop.rarity }}</td>
       </tr>
     </ng-template>
   </p-table>

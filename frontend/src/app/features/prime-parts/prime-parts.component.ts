@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { combineLatest, switchMap, of } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 import { DropApiService } from '../../core/services/drop-api.service';
 import { RelicDropTableComponent } from '../../shared/components/relic-drop-table/relic-drop-table.component';
 
 @Component({
   selector: 'app-prime-parts',
-  imports: [RelicDropTableComponent, MultiSelectModule, FormsModule],
+  imports: [RelicDropTableComponent, MultiSelectModule, FloatLabelModule, FormsModule],
   templateUrl: './prime-parts.component.html',
   styleUrl: './prime-parts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,19 +21,30 @@ export class PrimePartsComponent {
   private readonly api = inject(DropApiService);
 
   rarities: string[] = ['Common', 'Uncommon', 'Rare', 'Legendary'];
-  selectedRarities = signal<string[]>(['Rare']);
+  selectedRarities = signal<string[]>([]);
+
+  relicTiers: string[] = ['Lith', 'Meso', 'Neo', 'Axi'];
+  selectedRelicTiers = signal<string[]>([]);
+
+  refinements: string[] = ['Intact', 'Exceptional', 'Flawless', 'Radiant'];
+  selectedRefinement = signal<string[]>(['Radiant']);
 
   result = toSignal(
-    combineLatest([this.route.queryParams, toObservable(this.selectedRarities)]).pipe(
-      switchMap(([params, rarities]) => {
+    combineLatest([
+      this.route.queryParams,
+      toObservable(this.selectedRarities),
+      toObservable(this.selectedRelicTiers),
+      toObservable(this.selectedRefinement),
+    ]).pipe(
+      switchMap(([params, rarities, relicTiers, refinements]) => {
         if (!params['itemName']) {
           return of(null);
         }
         return this.api.searchPrimeParts({
           itemName: params['itemName'],
-          partType: params['partType'],
-          relicTier: params['relicTier'],
           dropRarity: rarities.join(','),
+          relicTier: relicTiers.join(','),
+          refinement: refinements.join(','),
         });
       }),
     ),

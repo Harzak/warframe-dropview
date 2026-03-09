@@ -12,13 +12,17 @@
   }
 }
 
-.multiselect-rarity {
-  width: 600px;
+.multiselect-rarities {
+  width: 250px;
+}
+
+.multiselect-relic-tiers {
+  width: 250px;
 }
 
 .filter-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 73%;
   height: 100px;

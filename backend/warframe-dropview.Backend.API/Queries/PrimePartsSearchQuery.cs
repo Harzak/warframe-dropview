@@ -5,8 +5,7 @@
 /// </summary>
 internal sealed class PrimePartsSearchQuery : BaseSearchQuery, IRequest<OperationResult<SearchResultDto>>
 {
-    public string? DropType { get; set; }
-    public string? PartType { get; set; }
-    public string? RelicTier { get; set; }
-    public string? DropRarity { get; set; }
+    public string? RelicTiers { get; set; }
+    public string? DropRarities { get; set; }
+    public string? Refinement { get; set; }
 }

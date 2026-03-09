@@ -11,10 +11,9 @@ internal sealed class RelicDropRepository : IRelicDropRepository
 
     public async Task<IEnumerable<RelicDrop>> SearchDropsAsync(
          string itemName,
-         string? dropType,
-         string? partType,
-         string? relicTier,
-         string? dropRarity,
+         string? relicTiers,
+         string? dropRarities,
+         string? refinement,
          int? offset,
          int? limit)
     {
@@ -26,24 +25,20 @@ internal sealed class RelicDropRepository : IRelicDropRepository
             filter &= builder.Regex(d => d.Name, new BsonRegularExpression(itemName, "i"));
         }
 
-        if (!string.IsNullOrWhiteSpace(dropType))
+        if(!string.IsNullOrWhiteSpace(refinement))
         {
-            filter &= builder.Eq(d => d.Type, dropType);
+            filter &= builder.Eq(d => d.Relic.Refinement, refinement.Trim().ToLowerInvariant());
         }
 
-        if (!string.IsNullOrWhiteSpace(partType))
+        if (!string.IsNullOrWhiteSpace(relicTiers))
         {
-            filter &= builder.Eq(d => d.Subtype, partType);
+            IEnumerable<string> tiers = relicTiers.Split(',').Select(r => r.Trim().ToLowerInvariant());
+            filter &= builder.In(d => d.Relic.Tier, tiers);
         }
 
-        if (!string.IsNullOrWhiteSpace(relicTier))
+        if (!string.IsNullOrWhiteSpace(dropRarities))
         {
-            filter &= builder.Eq(d => d.Relic.Tier, relicTier);
-        }
-
-        if (!string.IsNullOrWhiteSpace(dropRarity))
-        {
-            IEnumerable<string> rarities = dropRarity.Split(',').Select(r => r.Trim().ToLowerInvariant());
+            IEnumerable<string> rarities = dropRarities.Split(',').Select(r => r.Trim().ToLowerInvariant());
             filter &= builder.In(d => d.Rarity, rarities);
         }
 

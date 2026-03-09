@@ -14,7 +14,7 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
 
     public async Task<OperationResult<SearchResultDto>> Handle(PrimePartsSearchQuery request, CancellationToken cancellationToken)
     {
-        
+
         OperationResult<SearchResultDto> result = new();
 
         if (request is null)
@@ -29,10 +29,9 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
 
         IEnumerable<RelicDrop> drops = await _relicDropRepository.SearchDropsAsync(
            request.ItemName,
-           request.DropType,
-           request.PartType,
-           request.RelicTier,
-           request.DropRarity,
+           request.RelicTiers,
+           request.DropRarities,
+           request.Refinement,
            request.Offset,
            request.Limit).ConfigureAwait(false);
 

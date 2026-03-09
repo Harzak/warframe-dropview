@@ -1,15 +1,32 @@
 <div class="prime-parts-container">
   <div class="filter-container">
-    <p-multiselect
-      class="multiselect-rarity"
-      [options]="rarities"
-      [ngModel]="selectedRarities()"
-      (ngModelChange)="selectedRarities.set($event)"
-      [maxSelectedLabels]="5"
-      placeholder="Select Rarities"
-      display="chip"
-      filter="false"
-    />
+    <p-floatlabel>
+      <p-multiselect
+        id="multiselect-rarities"
+        class="multiselect-rarities"
+        [options]="rarities"
+        [ngModel]="selectedRarities()"
+        (ngModelChange)="selectedRarities.set($event)"
+        [maxSelectedLabels]="3"
+        display="chip"
+        filter="false"
+      />
+      <label for="multiselect-rarities">Rarities</label>
+    </p-floatlabel>
+
+    <p-floatlabel>
+      <p-multiselect
+        id="multiselect-relic-tiers"
+        class="multiselect-relic-tiers"
+        [options]="relicTiers"
+        [ngModel]="selectedRelicTiers()"
+        (ngModelChange)="selectedRelicTiers.set($event)"
+        [maxSelectedLabels]="3"
+        display="chip"
+        filter="false"
+      />
+      <label for="multiselect-relic-tiers">Relic Tiers</label>
+    </p-floatlabel>
   </div>
 
   <h2 class="prime-parts-header">Relic drops</h2>

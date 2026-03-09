@@ -56,6 +56,12 @@ body {
   --p-chip-remove-icon-color: #{colors.$color-light-white};
 }
 
+.p-floatlabel {
+  --p-floatlabel-color: #{colors.$color-light-white};
+  --p-floatlabel-focus-color: #{colors.$color-light-white};
+  --p-floatlabel-active-color: #{colors.$color-light-grey};
+}
+
 .p-inputtext {
   --p-inputtext-background: #{colors.$color-dark-black};
   --p-inputtext-color: #{colors.$color-light-white};
