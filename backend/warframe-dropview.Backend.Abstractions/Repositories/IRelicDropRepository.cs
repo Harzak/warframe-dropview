@@ -3,6 +3,7 @@
 public interface IRelicDropRepository
 {
     Task<IEnumerable<RelicDrop>> SearchDropsAsync(
+        string itemName,
         string? dropType,
         string? partType,
         string? relicTier,

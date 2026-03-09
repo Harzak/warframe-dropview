@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SearchResult } from '../../shared/models/search-result.model';
 
 export interface PrimePartsQuery {
+  itemName?: string;
   dropType?: string;
   partType?: string;
   relicTier?: string;
@@ -20,6 +21,7 @@ export class DropApiService {
   private readonly http = inject(HttpClient);
   searchPrimeParts(query: PrimePartsQuery = {}): Observable<SearchResult> {
     let params = new HttpParams();
+    if (query.itemName) params = params.set('itemName', query.itemName);
     if (query.dropType) params = params.set('dropType', query.dropType);
     if (query.partType) params = params.set('partType', query.partType);
     if (query.relicTier) params = params.set('relicTier', query.relicTier);

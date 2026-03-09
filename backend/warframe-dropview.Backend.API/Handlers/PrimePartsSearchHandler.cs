@@ -22,7 +22,13 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
             return result.WithError("Request cannot be null.");
         }
 
+        if (string.IsNullOrWhiteSpace(request.ItemName))
+        {
+            return result.WithError("Item name cannot be null or whitespace.");
+        }
+
         IEnumerable<RelicDrop> drops = await _relicDropRepository.SearchDropsAsync(
+           request.ItemName,
            request.DropType,
            request.PartType,
            request.RelicTier,

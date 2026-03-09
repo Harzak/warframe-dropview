@@ -10,6 +10,7 @@ internal sealed class RelicDropRepository : IRelicDropRepository
     }
 
     public async Task<IEnumerable<RelicDrop>> SearchDropsAsync(
+         string itemName,
          string? dropType,
          string? partType,
          string? relicTier,
@@ -19,6 +20,11 @@ internal sealed class RelicDropRepository : IRelicDropRepository
     {
         FilterDefinitionBuilder<RelicDrop> builder = Builders<RelicDrop>.Filter;
         FilterDefinition<RelicDrop> filter = builder.Empty;
+
+        if (!string.IsNullOrEmpty(itemName))
+        {
+            filter &= builder.Regex(d => d.Name, new BsonRegularExpression(itemName, "i"));
+        }
 
         if (!string.IsNullOrWhiteSpace(dropType))
         {

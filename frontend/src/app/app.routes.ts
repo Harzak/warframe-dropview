@@ -2,11 +2,6 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'prime-parts',
-  },
-  {
     path: 'prime-parts',
     loadChildren: () =>
       import('./features/prime-parts/prime-parts.routes').then(
@@ -22,9 +17,5 @@ export const routes: Routes = [
     path: 'mods',
     loadChildren: () =>
       import('./features/mods/mods.routes').then((m) => m.MODS_ROUTES),
-  },
-  {
-    path: '**',
-    redirectTo: 'prime-parts',
-  },
+  }
 ];

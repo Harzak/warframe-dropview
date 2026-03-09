@@ -1,9 +1,11 @@
 <div class="prime-parts-container">
   <h2 class="prime-parts-header">Prime Parts</h2>
 
-  @if (result(); as data) {
-    <app-relic-drop-table [drops]="data.relicDrops" />
-  } @else {
+  @if (result() === undefined) {
     <p>Loading…</p>
+  } @else if (result() === null) {
+    <p>Use the search bar above to find prime parts.</p>
+  } @else {
+    <app-relic-drop-table [drops]="result()!.relicDrops" />
   }
 </div>

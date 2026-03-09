@@ -39,18 +39,23 @@ export class SearchBarComponent {
   }
 
   onContextChange(context: SearchContext): void {
-    this.router.navigate([`/${context}`]);
+    this.NavigateToActiveContext();
   }
 
   onSearch(): void {
-    const queryParams: Record<string, string> = {};
-    this.router.navigate([`/${this.activeContext}`], { queryParams });
+    this.NavigateToActiveContext();
   }
 
   private contextFromUrl(url: string): SearchContext {
     if (url.startsWith('/relics')) return 'relics';
     if (url.startsWith('/mods')) return 'mods';
     return 'prime-parts';
+  }
+
+  private NavigateToActiveContext(): void {
+    if (!this.searchTerm.trim()) return;
+    const queryParams: Record<string, string> = {'itemName': this.searchTerm};
+    this.router.navigate([`/${this.activeContext}`], { queryParams });
   }
 
   private syncFromUrl(): void {
