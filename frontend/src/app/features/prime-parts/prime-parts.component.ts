@@ -23,18 +23,18 @@ export class PrimePartsComponent {
   rarities: string[] = ['Common', 'Uncommon', 'Rare', 'Legendary'];
   selectedRarities = signal<string[]>([]);
 
-  relicTiers: string[] = ['Lith', 'Meso', 'Neo', 'Axi'];
-  selectedRelicTiers = signal<string[]>([]);
+  tiers: string[] = ['Lith', 'Meso', 'Neo', 'Axi'];
+  selectedTiers = signal<string[]>([]);
 
   refinements: string[] = ['Intact', 'Exceptional', 'Flawless', 'Radiant'];
-  selectedRefinement = signal<string[]>(['Radiant']);
+  selectedRefinements = signal<string[]>(['Radiant']);
 
   result = toSignal(
     combineLatest([
       this.route.queryParams,
       toObservable(this.selectedRarities),
-      toObservable(this.selectedRelicTiers),
-      toObservable(this.selectedRefinement),
+      toObservable(this.selectedTiers),
+      toObservable(this.selectedRefinements),
     ]).pipe(
       switchMap(([params, rarities, relicTiers, refinements]) => {
         if (!params['itemName']) {
@@ -42,9 +42,9 @@ export class PrimePartsComponent {
         }
         return this.api.searchPrimeParts({
           itemName: params['itemName'],
-          dropRarity: rarities.join(','),
-          relicTier: relicTiers.join(','),
-          refinement: refinements.join(','),
+          dropRarities: rarities.join(','),
+          relicTiers: relicTiers.join(','),
+          refinements: refinements.join(','),
         });
       }),
     ),

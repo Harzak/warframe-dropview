@@ -13,7 +13,7 @@ internal sealed class RelicDropRepository : IRelicDropRepository
          string itemName,
          string? relicTiers,
          string? dropRarities,
-         string? refinement,
+         string? relicRefinements,
          int? offset,
          int? limit)
     {
@@ -25,9 +25,10 @@ internal sealed class RelicDropRepository : IRelicDropRepository
             filter &= builder.Regex(d => d.Name, new BsonRegularExpression(itemName, "i"));
         }
 
-        if(!string.IsNullOrWhiteSpace(refinement))
+        if(!string.IsNullOrWhiteSpace(relicRefinements))
         {
-            filter &= builder.Eq(d => d.Relic.Refinement, refinement.Trim().ToLowerInvariant());
+            IEnumerable<string> refinements = relicRefinements.Split(',').Select(r => r.Trim().ToLowerInvariant());
+            filter &= builder.In(d => d.Relic.Refinement, refinements);
         }
 
         if (!string.IsNullOrWhiteSpace(relicTiers))

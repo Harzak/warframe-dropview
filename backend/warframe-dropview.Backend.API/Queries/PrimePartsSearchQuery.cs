@@ -7,5 +7,5 @@ internal sealed class PrimePartsSearchQuery : BaseSearchQuery, IRequest<Operatio
 {
     public string? RelicTiers { get; set; }
     public string? DropRarities { get; set; }
-    public string? Refinement { get; set; }
+    public string? Refinements { get; set; }
 }

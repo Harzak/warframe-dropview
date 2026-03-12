@@ -31,7 +31,7 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
            request.ItemName,
            request.RelicTiers,
            request.DropRarities,
-           request.Refinement,
+           request.Refinements,
            request.Offset,
            request.Limit).ConfigureAwait(false);
 
@@ -46,7 +46,8 @@ internal sealed class PrimePartsSearchHandler : IRequestHandler<PrimePartsSearch
                 Rarity = drop.Rarity,
                 PartType = drop.Subtype,
                 RelicTier = drop.Relic.Tier,
-                RelicCode = drop.Relic.Code
+                RelicCode = drop.Relic.Code,
+                Refinement = drop.Relic.Refinement
             };
 
             searchResult.RelicDrops.Add(dto);

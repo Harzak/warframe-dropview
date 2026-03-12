@@ -6,7 +6,7 @@ public interface IRelicDropRepository
         string itemName,
         string? relicTiers,
         string? dropRarities,
-        string? refinement,
+        string? relicRefinements,
         int? offset,
         int? limit);
 

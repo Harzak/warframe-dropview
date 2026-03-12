@@ -6,9 +6,9 @@ import { SearchResult } from '../../shared/models/search-result.model';
 
 export interface PrimePartsQuery {
   itemName?: string;
-  relicTier?: string;
-  dropRarity?: string;
-  refinement?: string;
+  relicTiers?: string;
+  dropRarities?: string;
+  refinements?: string;
 }
 
 export interface RelicsQuery {
@@ -21,9 +21,9 @@ export class DropApiService {
   searchPrimeParts(query: PrimePartsQuery = {}): Observable<SearchResult> {
     let params = new HttpParams();
     if (query.itemName) params = params.set('itemName', query.itemName.toLowerCase());
-    if (query.relicTier) params = params.set('relicTiers', query.relicTier.toLowerCase());
-    if (query.dropRarity) params = params.set('dropRarities', query.dropRarity.toLowerCase());
-    if (query.refinement) params = params.set('refinement', query.refinement.toLowerCase());
+    if (query.relicTiers) params = params.set('relicTiers', query.relicTiers.toLowerCase());
+    if (query.dropRarities) params = params.set('dropRarities', query.dropRarities.toLowerCase());
+    if (query.refinements) params = params.set('refinements', query.refinements.toLowerCase());
 
     return this.http.get<SearchResult>(`/primeparts/search?limit=20`, {
       params,

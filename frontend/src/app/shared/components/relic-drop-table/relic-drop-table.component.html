@@ -1,12 +1,21 @@
 @if (drops.length > 0) {
-  <p-table [value]="drops" size="small" showGridlines="true">
+  <p-table
+    [scrollable]="true"
+    [rows]="20"
+    [resizableColumns]="true"
+    [value]="drops"
+    size="small"
+    [lazy]="true"
+    showGridlines="true"
+  >
     <ng-template #header>
       <tr>
-        <th>Name</th>
-        <th>Part Type</th>
-        <th>Relic</th>
-        <th>Rarity</th>
-        <th>Drop Rate</th>
+        <th pResizableColumn>Name</th>
+        <th pResizableColumn>Part Type</th>
+        <th pResizableColumn>Relic</th>
+        <th pResizableColumn>Rarity</th>
+        <th pResizableColumn>Refinement</th>
+        <th pResizableColumn>Drop Rate</th>
       </tr>
     </ng-template>
     <ng-template #body let-drop>
@@ -15,6 +24,7 @@
         <td>{{ drop.partType | titlecase }}</td>
         <td>{{ drop.relicTier + ' ' + drop.relicCode | titlecase }}</td>
         <td>{{ drop.rarity | titlecase }}</td>
+        <td>{{ drop.refinement | titlecase }}</td>
         <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
       </tr>
     </ng-template>

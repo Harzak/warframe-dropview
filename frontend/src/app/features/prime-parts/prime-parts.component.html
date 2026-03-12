@@ -18,14 +18,28 @@
       <p-multiselect
         id="multiselect-relic-tiers"
         class="multiselect-relic-tiers"
-        [options]="relicTiers"
-        [ngModel]="selectedRelicTiers()"
-        (ngModelChange)="selectedRelicTiers.set($event)"
+        [options]="tiers"
+        [ngModel]="selectedTiers()"
+        (ngModelChange)="selectedTiers.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
         filter="false"
       />
-      <label for="multiselect-relic-tiers">Relic Tiers</label>
+      <label for="multiselect-relic-tiers">Tiers</label>
+    </p-floatlabel>
+
+    <p-floatlabel>
+      <p-multiselect
+        id="multiselect-relic-refinements"
+        class="multiselect-relic-refinements"
+        [options]="refinements"
+        [ngModel]="selectedRefinements()"
+        (ngModelChange)="selectedRefinements.set($event)"
+        [maxSelectedLabels]="3"
+        display="chip"
+        filter="false"
+      />
+      <label for="multiselect-relic-refinements">Refinements</label>
     </p-floatlabel>
   </div>
 
