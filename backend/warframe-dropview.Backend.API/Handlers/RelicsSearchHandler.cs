@@ -23,7 +23,19 @@ internal sealed class RelicsSearchHandler : IRequestHandler<RelicsSearchQuery, O
             return result.WithError("Request cannot be null.");
         }
 
-        IEnumerable<MissionDrop> drops = await _missionDropRepository.SearchDropsAsync(request.ItemName, request.Offset, request.Limit).ConfigureAwait(false);
+        if (string.IsNullOrWhiteSpace(request.ItemName))
+        {
+            return result.WithError("Item name cannot be null or whitespace.");
+        }
+
+        IEnumerable<MissionDrop> drops = await _missionDropRepository.SearchDropsAsync(
+            request.ItemName,
+            request.DropRarities,
+            "relic",
+            request.RelicTiers,
+            request.MissionTypes,
+            request.Offset,
+            request.Limit).ConfigureAwait(false);
 
         SearchResultDto searchResult = new();
 
@@ -37,12 +49,14 @@ internal sealed class RelicsSearchHandler : IRequestHandler<RelicsSearchQuery, O
                 MissionName = drop.Mission.Name,
                 MissionType = drop.Mission.Type,
                 Planet = drop.Mission.Planet,
-                Rotation = drop.Mission.Rotation
+                Rotation = drop.Mission.Rotation,
+                Type = drop.Type,
+                Subtype = drop.Subtype
             };
 
             searchResult.MissionDrops.Add(dto);
         }
 
-        return result.WithValue(searchResult);
+        return result.WithValue(searchResult).WithSuccess();
     }
 }

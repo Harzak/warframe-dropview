@@ -1,26 +1,45 @@
 @if (drops.length > 0) {
-  <table>
-    <thead>
+  <p-table
+    [scrollable]="true"
+    [resizableColumns]="true"
+    [value]="drops"
+    size="small"
+    showGridlines="true">
+    <ng-template #header>
       <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Enemy</th>
-        <th>Drop Rate</th>
-        <th>Rarity</th>
+        <th pResizableColumn>Name</th>
+        <th pResizableColumn>Type</th>
+        <th pResizableColumn>Enemy</th>
+        <th pResizableColumn>Drop Rate</th>
+        <th pResizableColumn>Rarity</th>
       </tr>
-    </thead>
-    <tbody>
-      @for (drop of drops; track drop.name + drop.enemyName) {
+    </ng-template>
+    <ng-template #body let-drop>
+      <tr>
+        <td>{{ drop.name | titlecase }}</td>
+        <td>{{ drop.type | titlecase }}</td>
+        <td>{{ drop.enemyName | titlecase }}</td>
+        <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
+        <td>{{ drop.rarity | titlecase }}</td>
+      </tr>
+    </ng-template>
+    @if (hasMore) {
+      <ng-template #footer>
         <tr>
-          <td>{{ drop.name }}</td>
-          <td>{{ drop.type }}</td>
-          <td>{{ drop.enemyName }}</td>
-          <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
-          <td>{{ drop.rarity }}</td>
+          <td colspan="5" style="text-align: center;">
+            <p-button
+              icon="pi pi-arrow-circle-down"
+              [rounded]="true" [text]="true"
+              [loading]="loading"
+              size="large"
+              (onClick)="loadMore.emit()"
+            />
+          </td>
         </tr>
-      }
-    </tbody>
-  </table>
+      </ng-template>
+    }
+  </p-table>
 } @else {
   <p>No enemy drops found.</p>
 }
+

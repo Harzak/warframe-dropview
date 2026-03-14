@@ -1,8 +1,7 @@
-export interface RelicsQuery {
+export interface ModsQuery {
   itemName?: string;
-  relicTiers?: string;
   dropRarities?: string;
-  missionTypes?: string;
+  itemTypes?: string;
   offset?: number;
   limit?: number;
 }

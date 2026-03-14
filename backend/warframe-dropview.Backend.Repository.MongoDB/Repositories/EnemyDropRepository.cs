@@ -9,7 +9,11 @@ internal sealed class EnemyDropRepository : IEnemyDropRepository
         _db = database.GetCollection<EnemyDrop>("enemy_drops") ?? throw new ArgumentNullException(nameof(database));
     }
 
-    public async Task<IEnumerable<EnemyDrop>> SearchDrops(string itemName, int? offset, int? limit)
+    public async Task<IEnumerable<EnemyDrop>> SearchDropsAsync(string itemName,
+        string? dropRarities,
+        string? itemTypes,
+        int? offset, 
+        int? limit)
     {
         FilterDefinitionBuilder<EnemyDrop> builder = Builders<EnemyDrop>.Filter;
         FilterDefinition<EnemyDrop  > filter = builder.Empty;

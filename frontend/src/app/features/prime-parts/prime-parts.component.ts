@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { combineLatest, switchMap, of, tap } from 'rxjs';
+import { combineLatest, switchMap, of, tap, Observable } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { Observable } from 'rxjs';
 
 import { DropApiService } from '../../core/services/drop-api.service';
 import { RelicDropTableComponent } from '../../shared/components/relic-drop-table/relic-drop-table.component';

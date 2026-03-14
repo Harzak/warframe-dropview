@@ -1,0 +1,15 @@
+.relics-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 1200px;
+    margin: 30px auto;
+
+    .missions-drops-header {
+        margin-bottom: 1rem;
+    } 
+}
+
+.missions-drops-component{
+    margin-bottom: 30px;
+}

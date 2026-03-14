@@ -1,0 +1,34 @@
+@use '../../../styles/abstracts/colors' as colors;
+
+.mods-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 1200px;
+  margin: 30px auto;
+
+  .mods-header {
+    margin-bottom: 1rem;
+  }
+}
+
+.multiselect-types {
+  width: 250px;
+}
+
+.multiselect-rarities {
+  width: 250px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 73%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.mods-table-component {
+  margin-bottom: 30px;
+}

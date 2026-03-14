@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SearchResult } from '../../shared/models/search-result.model';
 import { PrimePartsQuery } from '../../shared/models/primePartsQuery.model';
 import { RelicsQuery } from '../../shared/models/relicsQuery.model';
+import { ModsQuery } from '../../shared/models/modsQuery.model';
 
 @Injectable({ providedIn: 'root' })
 export class DropApiService {
@@ -28,13 +29,23 @@ export class DropApiService {
 
   public searchRelics(query: RelicsQuery = {}): Observable<SearchResult> {
     let params = new HttpParams();
-    if (query.relicName) params = params.set('relicName', query.relicName);
-    return this._http.get<SearchResult>(`/relics/search`, {
-      params,
-    });
+
+    if (query.itemName) params = params.set('itemName', query.itemName.toLowerCase());
+    if (query.offset != null) params = params.set('offset', query.offset);
+    if (query.limit != null) params = params.set('limit', query.limit);
+
+    return this._http.get<SearchResult>(`/relics/search`, { params });
   }
 
-  public searchMods(): Observable<SearchResult> {
-    return this._http.get<SearchResult>(`/mods/search`);
+  public searchMods(query: ModsQuery = {}): Observable<SearchResult> {
+    let params = new HttpParams();
+
+    if (query.itemName) params = params.set('itemName', query.itemName.toLowerCase());
+    if (query.dropRarities) params = params.set('dropRarities', query.dropRarities.toLowerCase());
+    if (query.itemTypes) params = params.set('itemTypes', query.itemTypes.toLowerCase());
+    if (query.offset != null) params = params.set('offset', query.offset);
+    if (query.limit != null) params = params.set('limit', query.limit);
+
+    return this._http.get<SearchResult>('/mods/search', { params });
   }
 }

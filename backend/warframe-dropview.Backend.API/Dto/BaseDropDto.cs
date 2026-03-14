@@ -7,6 +7,7 @@ public class BaseDropDto
 {
     public string Name { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty; //e.g., "Resource", "Blueprint", "Mod", "Relic", "Warframe Part" ...
+    public string Subtype { get; set; } = string.Empty;
     public double DropRate { get; set; }
     public string Rarity { get; set; } = string.Empty; //e.g., "Common", "Uncommon", "Rare", "Legendary" ...
 }

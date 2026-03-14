@@ -1,8 +1,59 @@
-<h2>Mods</h2>
+<div class="mods-container">
+  <div class="filter-container">
+    <p-floatlabel>
+      <p-multiselect
+        id="multiselect-types"
+        class="multiselect-types"
+        [options]="types"
+        [ngModel]="selectedTypes()"
+        (ngModelChange)="selectedTypes.set($event)"
+        [maxSelectedLabels]="2"
+        display="chip"
+        filter="false"
+      />
+      <label for="multiselect-types">Types</label>
+    </p-floatlabel>
 
-@if (result(); as data) {
-  <app-mission-drop-table [drops]="data.missionDrops" />
-  <app-enemy-drop-table [drops]="data.enemyDrops" />
-} @else {
-  <p>Loading…</p>
-}
+    <p-floatlabel>
+      <p-multiselect
+        id="multiselect-rarities"
+        class="multiselect-rarities"
+        [options]="rarities"
+        [ngModel]="selectedRarities()"
+        (ngModelChange)="selectedRarities.set($event)"
+        [maxSelectedLabels]="3"
+        display="chip"
+        filter="false"
+      />
+      <label for="multiselect-rarities">Rarities</label>
+    </p-floatlabel>
+  </div>
+
+  @if (itemName() === null) {
+    <p>Use the search bar above to find mods.</p>
+  } @else {
+    <h2 class="mods-header">Mission Drops</h2>
+    @if (loading() && missionDrops().length === 0) {
+      <p>Loading…</p>
+    } @else {
+      <app-mission-drop-table class="mods-table-component"
+        [drops]="missionDrops()"
+        [hasMore]="hasMore()"
+        [loading]="loading()"
+        (loadMore)="onLoadMore()"
+      />
+    }
+
+    <h2 class="mods-header">Enemy Drops</h2>
+    @if (loading() && enemyDrops().length === 0) {
+      <p>Loading…</p>
+    } @else {
+      <app-enemy-drop-table class="mods-table-component"
+        [drops]="enemyDrops()"
+        [hasMore]="hasMore()"
+        [loading]="loading()"
+        (loadMore)="onLoadMore()"
+      />
+    }
+  }
+</div>

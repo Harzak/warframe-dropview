@@ -1,7 +1,20 @@
-<h2>Relics</h2>
+  <div class="relics-container">
+    <div class="filter-container">
 
-@if (result(); as data) {
-  <app-mission-drop-table [drops]="data.missionDrops" />
-} @else {
-  <p>Loading…</p>
-}
+    </div>
+  <h2 class="missions-drops-header">Missions drops</h2>
+
+  @if (itemName() === null) {
+    <p>Use the search bar above to find relics.</p>
+  } @else if (loading() && drops().length === 0) {
+    <p>Loading…</p>
+  } @else {
+    <app-mission-drop-table class="missions-drops-component"
+      [drops]="drops()"
+      [hasMore]="hasMore()"
+      [loading]="loading()"
+      (loadMore)="onLoadMore()"
+    />
+  }
+
+</div>
