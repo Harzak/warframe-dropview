@@ -13,14 +13,15 @@ import { MissionDropTableComponent } from '../../shared/components/mission-drop-
   styleUrl: './relics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class RelicsComponent {
-  private readonly route = inject(ActivatedRoute);
-  private readonly api = inject(DropApiService);
+  private readonly _route = inject(ActivatedRoute);
+  private readonly _api = inject(DropApiService);
 
   result = toSignal(
-    this.route.queryParams.pipe(
+    this._route.queryParams.pipe(
       switchMap(params =>
-        this.api.searchRelics({
+        this._api.searchRelics({
           relicName: params['relicName'],
         })
       )

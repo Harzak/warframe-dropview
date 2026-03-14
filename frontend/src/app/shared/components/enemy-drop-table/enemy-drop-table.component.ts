@@ -10,6 +10,7 @@ import { EnemyDrop } from '../../models/enemy-drop.model';
   styleUrl: './enemy-drop-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class EnemyDropTableComponent {
   @Input() drops: EnemyDrop[] = [];
 }

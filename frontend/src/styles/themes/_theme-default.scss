@@ -80,3 +80,14 @@ body {
 .p-datatable-header {
   --p-datatable-header-background: #{colors.$color-dark-black};
 }
+
+.p-button {
+  --p-button-background: #{colors.$color-dark-black};
+  --p-button-text-primary-hover-background: #{colors.$color-darker-grey};
+  --p-button-text-primary-color: #{colors.$color-light-white};  
+}
+
+.p-datatable-tfoot {
+  --p-datatable-footer-cell-background: #{colors.$color-darker-black};
+  --p-datatable-footer-cell-border-color: #{colors.$color-darker-black};
+}

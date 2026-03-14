@@ -16,25 +16,26 @@ type SearchContext = 'prime-parts' | 'relics' | 'mods';
 })
 
 export class SearchBarComponent {
-  private readonly router = inject(Router);
-  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly contexts: { value: SearchContext; label: string }[] = [
+  private readonly _router = inject(Router);
+  private readonly _cdr = inject(ChangeDetectorRef);
+
+  public readonly contexts: { value: SearchContext; label: string }[] = [
     { value: 'prime-parts', label: 'Prime Parts' },
     { value: 'relics', label: 'Relics' },
     { value: 'mods', label: 'Mods' },
   ];
 
-  searchTerm = '';
-  activeContext: SearchContext = this.contextFromUrl(this.router.url);
+  public searchTerm = '';
+  public activeContext: SearchContext = this.contextFromUrl(this._router.url);
 
   constructor() {
     this.syncFromUrl();
-    this.router.events
+    this._router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(() => {
         this.syncFromUrl();
-        this.cdr.markForCheck();
+        this._cdr.markForCheck();
       });
   }
 
@@ -55,10 +56,10 @@ export class SearchBarComponent {
   private NavigateToActiveContext(): void {
     if (!this.searchTerm.trim()) return;
     const queryParams: Record<string, string> = {'itemName': this.searchTerm};
-    this.router.navigate([`/${this.activeContext}`], { queryParams });
+    this._router.navigate([`/${this.activeContext}`], { queryParams });
   }
 
   private syncFromUrl(): void {
-    this.activeContext = this.contextFromUrl(this.router.url);
+    this.activeContext = this.contextFromUrl(this._router.url);
   }
 }

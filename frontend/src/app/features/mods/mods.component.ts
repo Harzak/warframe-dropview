@@ -12,8 +12,9 @@ import { EnemyDropTableComponent } from '../../shared/components/enemy-drop-tabl
   styleUrl: './mods.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModsComponent {
-  private readonly api = inject(DropApiService);
 
-  result = toSignal(this.api.searchMods());
+export class ModsComponent {
+  private readonly _api = inject(DropApiService);
+
+  result = toSignal(this._api.searchMods());
 }

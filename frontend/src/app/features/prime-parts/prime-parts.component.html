@@ -45,11 +45,16 @@
 
   <h2 class="prime-parts-header">Relic drops</h2>
 
-  @if (result() === undefined) {
-    <p>Loading…</p>
-  } @else if (result() === null) {
+  @if (itemName() === null) {
     <p>Use the search bar above to find prime parts.</p>
+  } @else if (loading() && drops().length === 0) {
+    <p>Loading…</p>
   } @else {
-    <app-relic-drop-table [drops]="result()!.relicDrops" />
+    <app-relic-drop-table class="prime-part-component"
+      [drops]="drops()"
+      [hasMore]="hasMore()"
+      [loading]="loading()"
+      (loadMore)="onLoadMore()"
+    />
   }
 </div>

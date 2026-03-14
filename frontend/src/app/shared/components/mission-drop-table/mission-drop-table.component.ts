@@ -10,6 +10,7 @@ import { MissionDrop } from '../../models/mission-drop.model';
   styleUrl: './mission-drop-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class MissionDropTableComponent {
   @Input() drops: MissionDrop[] = [];
 }

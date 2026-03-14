@@ -1,13 +1,10 @@
 @if (drops.length > 0) {
   <p-table
     [scrollable]="true"
-    [rows]="20"
     [resizableColumns]="true"
     [value]="drops"
     size="small"
-    [lazy]="true"
-    showGridlines="true"
-  >
+    showGridlines="true">
     <ng-template #header>
       <tr>
         <th pResizableColumn>Name</th>
@@ -28,6 +25,21 @@
         <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
       </tr>
     </ng-template>
+    @if (hasMore) {
+      <ng-template #footer>
+        <tr style="background-color: red;">
+          <td colspan="6" style="text-align: center;">
+            <p-button
+              icon="pi pi-arrow-circle-down"
+              [rounded]="true" [text]="true"
+              [loading]="loading"
+              size="large"
+              (onClick)="loadMore.emit()"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    }
   </p-table>
 } @else {
   <p>No relic drops found.</p>
