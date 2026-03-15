@@ -1,0 +1,6 @@
+@use '../../../../styles/abstracts/colors' as colors;
+
+:host {
+  --p-datatable-header-cell-border-color: #{colors.$color-dark-grey};
+  --p-datatable-body-cell-border-color: #{colors.$color-dark-grey};
+}

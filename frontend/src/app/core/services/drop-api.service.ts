@@ -31,6 +31,9 @@ export class DropApiService {
     let params = new HttpParams();
 
     if (query.itemName) params = params.set('itemName', query.itemName.toLowerCase());
+    if (query.relicTiers) params = params.set('relicTiers', query.relicTiers.toLowerCase());
+    if (query.dropRarities) params = params.set('dropRarities', query.dropRarities.toLowerCase());
+    if (query.missionTypes) params = params.set('missionTypes', query.missionTypes.toLowerCase());
     if (query.offset != null) params = params.set('offset', query.offset);
     if (query.limit != null) params = params.set('limit', query.limit);
 
@@ -43,6 +46,7 @@ export class DropApiService {
     if (query.itemName) params = params.set('itemName', query.itemName.toLowerCase());
     if (query.dropRarities) params = params.set('dropRarities', query.dropRarities.toLowerCase());
     if (query.itemTypes) params = params.set('itemTypes', query.itemTypes.toLowerCase());
+    if (query.missionTypes) params = params.set('missionTypes', query.missionTypes.toLowerCase());
     if (query.offset != null) params = params.set('offset', query.offset);
     if (query.limit != null) params = params.set('limit', query.limit);
 

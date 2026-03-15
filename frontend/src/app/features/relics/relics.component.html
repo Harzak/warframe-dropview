@@ -1,6 +1,46 @@
   <div class="relics-container">
     <div class="filter-container">
+      <p-floatlabel>
+        <p-multiselect
+          id="multiselect-rarities"
+          class="multiselect-rarities"
+          [options]="rarities"
+          [ngModel]="selectedRarities()"
+          (ngModelChange)="selectedRarities.set($event)"
+          [maxSelectedLabels]="3"
+          display="chip"
+          filter="false"
+        />
+        <label for="multiselect-rarities">Rarities</label>
+      </p-floatlabel>
 
+      <p-floatlabel>
+        <p-multiselect
+          id="multiselect-relic-tiers"
+          class="multiselect-relic-tiers"
+          [options]="tiers"
+          [ngModel]="selectedTiers()"
+          (ngModelChange)="selectedTiers.set($event)"
+          [maxSelectedLabels]="3"
+          display="chip"
+          filter="false"
+        />
+        <label for="multiselect-relic-tiers">Tiers</label>
+      </p-floatlabel>
+
+      <p-floatlabel>
+        <p-multiselect
+          id="multiselect-mission-types"
+          class="multiselect-mission-types"
+          [options]="missionTypes"
+          [ngModel]="selectedMissionTypes()"
+          (ngModelChange)="selectedMissionTypes.set($event)"
+          [maxSelectedLabels]="3"
+          display="chip"
+          filter="false"
+        />
+        <label for="multiselect-mission-types">Mission Types</label>
+      </p-floatlabel>
     </div>
   <h2 class="missions-drops-header">Missions drops</h2>
 

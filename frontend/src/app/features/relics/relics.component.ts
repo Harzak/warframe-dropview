@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { combineLatest, switchMap, of, tap, Observable } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { FormsModule } from '@angular/forms';
 
 import { DropApiService } from '../../core/services/drop-api.service';
 import { MissionDropTableComponent } from '../../shared/components/mission-drop-table/mission-drop-table.component';
@@ -11,7 +13,7 @@ import { SearchResult } from '../../shared/models/search-result.model';
 
 @Component({
   selector: 'app-relics',
-  imports: [MissionDropTableComponent],
+  imports: [MissionDropTableComponent, MultiSelectModule, FloatLabelModule, FormsModule],
   templateUrl: './relics.component.html',
   styleUrl: './relics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +28,13 @@ export class RelicsComponent {
   private _offset = 0;
 
   public rarities: string[];
-  public selectedRarities = signal<string[]>([]);
+  public selectedRarities = signal<string[]>([]);;
+
+  public tiers: string[];
+  public selectedTiers = signal<string[]>([]);
+
+  public missionTypes: string[];
+  public selectedMissionTypes = signal<string[]>([]);
 
   public drops = signal<MissionDrop[]>([]);
   public hasMore = signal(false);
@@ -35,6 +43,8 @@ export class RelicsComponent {
 
   constructor() {
     this.rarities = ['Common', 'Uncommon', 'Rare', 'Legendary'];
+    this.tiers = ['Lith', 'Meso', 'Neo', 'Axi'];
+    this.missionTypes = ['Assassination', 'Defense', 'Extermination', 'Interception', 'Mobile Defense', 'Rescue', 'Sabotage', 'Survival', 'Spy', 'Hive', 'Disruption'];
     this.watchFilters();
   }
 
@@ -52,6 +62,8 @@ export class RelicsComponent {
     combineLatest([
       this._route.queryParams,
       toObservable(this.selectedRarities),
+      toObservable(this.selectedTiers),
+      toObservable(this.selectedMissionTypes),
     ]).pipe(
       tap(([params]) => this.resetState(params['itemName'] ?? null)),
       switchMap(([params]) => {
@@ -74,6 +86,8 @@ export class RelicsComponent {
     return this._api.searchRelics({
       itemName: this.itemName()!,
       dropRarities: this.selectedRarities().join(','),
+      relicTiers: this.selectedTiers().join(','),
+      missionTypes: this.selectedMissionTypes().join(','),
       offset,
       limit: this.LIMIT,
     });

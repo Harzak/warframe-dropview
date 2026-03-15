@@ -36,6 +36,9 @@ export class ModsComponent {
   public types: string[];
   public selectedTypes = signal<string[]>([]);
 
+  public missionTypes: string[];
+  public selectedMissionTypes = signal<string[]>([]);
+
   public missionDrops = signal<MissionDrop[]>([]);
   public enemyDrops = signal<EnemyDrop[]>([]);
   public hasMore = signal(false);
@@ -45,6 +48,8 @@ export class ModsComponent {
   constructor() {
     this.rarities = ['Common', 'Uncommon', 'Rare', 'Legendary'];
     this.types = ['Mod', 'Arcane'];
+    this.missionTypes = ['Assassination', 'Defense', 'Extermination', 'Interception', 'Mobile Defense', 'Rescue', 'Sabotage', 'Survival', 'Spy', 'Hive', 'Disruption'];
+
     this.watchFilters();
   }
 
@@ -63,6 +68,7 @@ export class ModsComponent {
       this._route.queryParams,
       toObservable(this.selectedRarities),
       toObservable(this.selectedTypes),
+      toObservable(this.selectedMissionTypes),
     ]).pipe(
       tap(([params]) => this.resetState(params['itemName'] ?? null)),
       switchMap(([params]) => {
@@ -87,6 +93,7 @@ export class ModsComponent {
       itemName: this.itemName()!,
       dropRarities: this.selectedRarities().join(','),
       itemTypes: this.selectedTypes().join(','),
+      missionTypes: this.selectedMissionTypes().join(','),
       offset,
       limit: this.LIMIT,
     });
