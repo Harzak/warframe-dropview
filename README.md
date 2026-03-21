@@ -13,6 +13,12 @@ The solution consists of:
 - **Backend.Abstractions**: Interfaces and result types
 - **Backend.Plugin.MongoDB**: MongoDB repository implementations
 
+## Prerequisites
+
+- [Docker & Docker Compose](https://docs.docker.com/get-docker/) (latest stable)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (to run the DropTableParser locally)
+- [Node.js 20+](https://nodejs.org/) (for frontend development)
+
 ## Quick Start
 
 ### 1. Clone the Repository
@@ -60,6 +66,16 @@ The parser will:
 1. Connect to MongoDB running in the container (`localhost:27017`)
 2. Parse the HTML file from `Resources/Warframe-PC-Drops_2025_10_21.html`
 3. Insert mission drops, relic drops, and enemy drops into the database
+
+### 4. Run the Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+The Angular app runs on `http://localhost:4200` and proxies API requests to `http://localhost:8080`.
 
 ### 5. Stop the Containers
 
