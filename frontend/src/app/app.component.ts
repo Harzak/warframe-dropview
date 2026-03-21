@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { AppHeaderComponent } from './shared/components/app-header/app-header.component';
-import { SearchBarComponent } from './shared/components/search-bar/search-bar.component';
+import { AppHeaderComponent } from './core/layout/app-header/app-header.component';
+import { SearchBarComponent } from './core/layout/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-root',

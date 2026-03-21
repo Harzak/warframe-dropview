@@ -1,36 +1,23 @@
+@use '../../../styles/abstracts/mixins' as mixins;
+
 .prime-parts-container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  max-width: 1200px;
-  margin: 30px auto;
+  @include mixins.feature-container;
 
   .prime-parts-header {
-    margin-bottom: 1rem;
+    @include mixins.section-header;
   }
 }
 
-.multiselect-rarities {
-  width: 250px;
-}
-
-.multiselect-relic-tiers {
-  width: 250px;
-}
-
+.multiselect-rarities,
+.multiselect-relic-tiers,
 .multiselect-relic-refinements {
-  width: 250px;
+  @include mixins.multiselect;
 }
 
 .filter-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 73%;
-  height: 100px;
-  margin: 0 auto;
+  @include mixins.filter-container;
 }
 
 .prime-part-component {
-  margin-bottom: 30px;
+  @include mixins.table-component-spacing;
 }

@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'prime-parts',
+    pathMatch: 'full',
+  },
+  {
     path: 'prime-parts',
     loadChildren: () =>
       import('./features/prime-parts/prime-parts.routes').then(
@@ -11,11 +16,17 @@ export const routes: Routes = [
   {
     path: 'relics',
     loadChildren: () =>
-      import('./features/relics/relics.routes').then((m) => m.RELICS_ROUTES),
+      import('./features/relics/relics.routes').then(
+        (m) => m.RELICS_ROUTES),
   },
   {
     path: 'mods',
     loadChildren: () =>
-      import('./features/mods/mods.routes').then((m) => m.MODS_ROUTES),
-  }
+      import('./features/mods/mods.routes').then(
+        (m) => m.MODS_ROUTES),
+  },
+  {
+    path: '**',
+    redirectTo: 'prime-parts',
+  },
 ];

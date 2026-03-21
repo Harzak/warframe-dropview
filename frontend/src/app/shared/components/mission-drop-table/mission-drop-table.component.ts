@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { DecimalPipe, TitleCasePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Button } from 'primeng/button';
 
-import { MissionDrop } from '../../models/mission-drop.model';
+import { MissionDrop } from '../../models';
 
 @Component({
   selector: 'app-mission-drop-table',
@@ -12,11 +12,10 @@ import { MissionDrop } from '../../models/mission-drop.model';
   styleUrl: './mission-drop-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class MissionDropTableComponent {
-  @Input() drops: MissionDrop[] = [];
-  @Input() hasMore = false;
-  @Input() loading = false;
+  readonly drops = input<MissionDrop[]>([]);
+  readonly hasMore = input(false);
+  readonly loading = input(false);
 
   readonly loadMore = output<void>();
 }

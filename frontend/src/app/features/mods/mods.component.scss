@@ -1,38 +1,23 @@
-@use '../../../styles/abstracts/colors' as colors;
+@use '../../../styles/abstracts/mixins' as mixins;
 
 .mods-container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  max-width: 1200px;
-  margin: 30px auto;
+  @include mixins.feature-container;
 
   .mods-header {
-    margin-bottom: 1rem;
+    @include mixins.section-header;
   }
 }
 
-.multiselect-types {
-  width: 250px;
-}
-
-.multiselect-rarities {
-  width: 250px;
-}
-
+.multiselect-types,
+.multiselect-rarities,
 .multiselect-mission-types {
-  width: 250px;
+  @include mixins.multiselect;
 }
 
 .filter-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 73%;
-  height: 100px;
-  margin: 0 auto;
+  @include mixins.filter-container;
 }
 
 .mods-table-component {
-  margin-bottom: 30px;
+  @include mixins.table-component-spacing;
 }

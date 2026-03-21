@@ -1,0 +1,28 @@
+@mixin feature-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+@mixin filter-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 73%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+@mixin multiselect($width: 250px) {
+  width: $width;
+}
+
+@mixin section-header {
+  margin-bottom: 1rem;
+}
+
+@mixin table-component-spacing {
+  margin-bottom: 30px;
+}

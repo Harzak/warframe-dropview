@@ -1,8 +1,8 @@
-@if (drops.length > 0) {
+@if (drops().length > 0) {
   <p-table
     [scrollable]="true"
     [resizableColumns]="true"
-    [value]="drops"
+    [value]="drops()"
     size="small"
     showGridlines="true">
     <ng-template #header>
@@ -25,14 +25,14 @@
         <td>{{ drop.dropRate | number: '1.2-2' }}%</td>
       </tr>
     </ng-template>
-    @if (hasMore) {
+    @if (hasMore()) {
       <ng-template #footer>
-        <tr style="background-color: red;">
-          <td colspan="6" style="text-align: center;">
+        <tr>
+          <td colspan="6" class="load-more-cell">
             <p-button
               icon="pi pi-arrow-circle-down"
               [rounded]="true" [text]="true"
-              [loading]="loading"
+              [loading]="loading()"
               size="large"
               (onClick)="loadMore.emit()"
             />

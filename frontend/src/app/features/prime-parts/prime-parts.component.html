@@ -9,7 +9,7 @@
         (ngModelChange)="selectedRarities.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-rarities">Rarities</label>
     </p-floatlabel>
@@ -23,7 +23,7 @@
         (ngModelChange)="selectedTiers.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-relic-tiers">Tiers</label>
     </p-floatlabel>
@@ -37,7 +37,7 @@
         (ngModelChange)="selectedRefinements.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-relic-refinements">Refinements</label>
     </p-floatlabel>
@@ -47,14 +47,16 @@
 
   @if (itemName() === null) {
     <p>Use the search bar above to find prime parts.</p>
-  } @else if (loading() && drops().length === 0) {
+  } @else if (search.error()) {
+    <p>{{ search.error() }}</p>
+  } @else if (search.loading() && search.items().length === 0) {
     <p>Loading…</p>
   } @else {
     <app-relic-drop-table class="prime-part-component"
-      [drops]="drops()"
-      [hasMore]="hasMore()"
-      [loading]="loading()"
-      (loadMore)="onLoadMore()"
+      [drops]="search.items()"
+      [hasMore]="search.hasMore()"
+      [loading]="search.loading()"
+      (loadMore)="search.loadMore()"
     />
   }
 </div>

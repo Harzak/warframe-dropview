@@ -1,15 +1,18 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, switchMap, of, tap, Observable } from 'rxjs';
+import { combineLatest, switchMap, of, tap } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 
-import { DropApiService } from '../../core/services/drop-api.service';
-import { MissionDropTableComponent } from '../../shared/components/mission-drop-table/mission-drop-table.component';
-import { MissionDrop } from '../../shared/models/mission-drop.model';
-import { SearchResult } from '../../shared/models/search-result.model';
+import { DropApiService } from '../../core';
+import { MissionDropTableComponent } from '../../shared/components';
+import { MissionDrop, SearchResult } from '../../shared/models';
+import { RARITIES, RELIC_TIERS, MISSION_TYPES } from '../../shared/constants';
+import { PaginatedSearch } from '../../shared/utils/paginated-search';
+
+const LIMIT = 20;
 
 @Component({
   selector: 'app-relics',
@@ -18,44 +21,39 @@ import { SearchResult } from '../../shared/models/search-result.model';
   styleUrl: './relics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class RelicsComponent {
   private readonly _route = inject(ActivatedRoute);
   private readonly _api = inject(DropApiService);
-   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _destroyRef = inject(DestroyRef);
 
-  private readonly LIMIT = 20;
-  private _offset = 0;
+  readonly rarities = [...RARITIES];
+  readonly selectedRarities = signal<string[]>([]);
 
-  public rarities: string[];
-  public selectedRarities = signal<string[]>([]);;
+  readonly tiers = [...RELIC_TIERS];
+  readonly selectedTiers = signal<string[]>([]);
 
-  public tiers: string[];
-  public selectedTiers = signal<string[]>([]);
+  readonly missionTypes = [...MISSION_TYPES];
+  readonly selectedMissionTypes = signal<string[]>([]);
 
-  public missionTypes: string[];
-  public selectedMissionTypes = signal<string[]>([]);
+  readonly itemName = signal<string | null>(null);
 
-  public drops = signal<MissionDrop[]>([]);
-  public hasMore = signal(false);
-  public loading = signal(false);
-  public itemName = signal<string | null>(null);
+  readonly search = new PaginatedSearch<SearchResult, MissionDrop>({
+    limit: LIMIT,
+    fetchFn: (offset) => this._api.searchRelics({
+      itemName: this.itemName()!,
+      dropRarities: this.selectedRarities().join(','),
+      relicTiers: this.selectedTiers().join(','),
+      missionTypes: this.selectedMissionTypes().join(','),
+      offset,
+      limit: LIMIT,
+    }),
+    extractItems: (result) => result.missionDrops,
+    hasMore: (result, limit) => result.missionDrops.length === limit,
+    destroyRef: this._destroyRef,
+  });
 
   constructor() {
-    this.rarities = ['Common', 'Uncommon', 'Rare', 'Legendary'];
-    this.tiers = ['Lith', 'Meso', 'Neo', 'Axi'];
-    this.missionTypes = ['Assassination', 'Defense', 'Extermination', 'Interception', 'Mobile Defense', 'Rescue', 'Sabotage', 'Survival', 'Spy', 'Hive', 'Disruption'];
     this.watchFilters();
-  }
-
-  public onLoadMore(): void {
-    if (this.loading()) return;
-    
-    this._offset += this.LIMIT;
-    this.loading.set(true);
-    this.fetchPage(this._offset).pipe(
-      takeUntilDestroyed(this._destroyRef),
-    ).subscribe(result => this.handleResult(result));
   }
 
   private watchFilters(): void {
@@ -65,38 +63,16 @@ export class RelicsComponent {
       toObservable(this.selectedTiers),
       toObservable(this.selectedMissionTypes),
     ]).pipe(
-      tap(([params]) => this.resetState(params['itemName'] ?? null)),
+      tap(([params]) => {
+        this.itemName.set(params['itemName'] ?? null);
+        this.search.reset();
+      }),
       switchMap(([params]) => {
         if (!params['itemName']) return of(null);
-        this.loading.set(true);
-        return this.fetchPage(0);
+        this.search.search();
+        return of(null);
       }),
       takeUntilDestroyed(this._destroyRef),
-    ).subscribe(result => this.handleResult(result));
-  }
-
-  private resetState(name: string | null): void {
-    this.itemName.set(name);
-    this._offset = 0;
-    this.drops.set([]);
-    this.hasMore.set(false);
-  }
-
-  private fetchPage(offset: number): Observable<SearchResult> {
-    return this._api.searchRelics({
-      itemName: this.itemName()!,
-      dropRarities: this.selectedRarities().join(','),
-      relicTiers: this.selectedTiers().join(','),
-      missionTypes: this.selectedMissionTypes().join(','),
-      offset,
-      limit: this.LIMIT,
-    });
-  }
-  
-  private handleResult(result: SearchResult | null): void {
-    this.loading.set(false);
-    if (!result) return;
-    this.drops.update(current => [...current, ...result.missionDrops]);
-    this.hasMore.set(result.missionDrops.length === this.LIMIT);
+    ).subscribe();
   }
 }

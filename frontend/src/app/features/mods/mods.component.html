@@ -10,7 +10,7 @@
         (ngModelChange)="selectedRarities.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-rarities">Rarities</label>
     </p-floatlabel>
@@ -24,7 +24,7 @@
         (ngModelChange)="selectedTypes.set($event)"
         [maxSelectedLabels]="2"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-types">Types</label>
     </p-floatlabel>
@@ -38,7 +38,7 @@
         (ngModelChange)="selectedMissionTypes.set($event)"
         [maxSelectedLabels]="3"
         display="chip"
-        filter="false"
+        [filter]="false"
       />
       <label for="multiselect-mission-types">Mission Types</label>
     </p-floatlabel>
@@ -46,28 +46,30 @@
 
   @if (itemName() === null) {
     <p>Use the search bar above to find mods.</p>
+  } @else if (search.error()) {
+    <p>{{ search.error() }}</p>
   } @else {
     <h2 class="mods-header">Mission Drops</h2>
-    @if (loading() && missionDrops().length === 0) {
+    @if (search.loading() && search.items().length === 0) {
       <p>Loading…</p>
     } @else {
       <app-mission-drop-table class="mods-table-component"
-        [drops]="missionDrops()"
-        [hasMore]="hasMore()"
-        [loading]="loading()"
-        (loadMore)="onLoadMore()"
+        [drops]="search.items()"
+        [hasMore]="search.hasMore()"
+        [loading]="search.loading()"
+        (loadMore)="search.loadMore()"
       />
     }
 
     <h2 class="mods-header">Enemy Drops</h2>
-    @if (loading() && enemyDrops().length === 0) {
+    @if (search.loading() && enemyDrops().length === 0) {
       <p>Loading…</p>
     } @else {
       <app-enemy-drop-table class="mods-table-component"
         [drops]="enemyDrops()"
-        [hasMore]="hasMore()"
-        [loading]="loading()"
-        (loadMore)="onLoadMore()"
+        [hasMore]="search.hasMore()"
+        [loading]="search.loading()"
+        (loadMore)="search.loadMore()"
       />
     }
   }

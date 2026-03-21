@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { SearchContext } from '../../models/search-context.model';
+import { SearchContext } from '../../../shared/models';
 
 @Component({
   selector: 'app-search-bar',

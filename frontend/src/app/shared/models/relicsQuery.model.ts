@@ -1,8 +1,0 @@
-export interface RelicsQuery {
-  itemName?: string;
-  relicTiers?: string;
-  dropRarities?: string;
-  missionTypes?: string;
-  offset?: number;
-  limit?: number;
-}
