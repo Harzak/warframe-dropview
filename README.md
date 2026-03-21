@@ -3,6 +3,9 @@
 Visual explorer for Warframe drop tables.
 Personal project used to practice front-end development.
 
+<img width="100%" alt="screenshot" src="https://github.com/user-attachments/assets/e1db1024-05e4-4b6e-8128-c28e793bf3f1" />
+
+
 ## Architecture
 
 The solution consists of:
